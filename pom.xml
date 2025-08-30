@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.metaverse</groupId>
-	<artifactId>tihcl</artifactId>
+	<artifactId>aleap</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>ALEAP</name>
