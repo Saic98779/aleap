@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.metaverse</groupId>
-	<artifactId>workflow</artifactId>
+	<artifactId>tihcl</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
-	<name>workflow</name>
+	<packaging>jar</packaging>
+	<name>ALEAP</name>
 	<description>Workflow project for Spring Boot</description>
 	<url/>
 	<licenses>
