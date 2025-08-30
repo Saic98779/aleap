@@ -47,8 +47,8 @@ public class ParticipantTemp {
     private Date certificateIssueDate;
     @Column(name = "need_assessment_methodology")
     private String needAssessmentMethodology;
-    @ManyToOne(cascade = CascadeType.ALL,targetEntity = OrganizationTemp.class)
-    @JoinColumn(name = "organization_temp_id",referencedColumnName = "organization_temp_id")
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = OrganizationTemp.class)
+    @JoinColumn(name = "organization_temp_id", referencedColumnName = "organization_temp_id")
     private OrganizationTemp organizationTemp;
     @ManyToMany
     @JoinTable(
@@ -57,6 +57,10 @@ public class ParticipantTemp {
             inverseJoinColumns = @JoinColumn(name = "program_id")
     )
     private List<Program> programs = new ArrayList<>();
+    private Boolean hasError = false;
+    private String errorMessage;
+    @Column(name = "is_deleted")
+    private Boolean isDeleted = false;
     @Column(name = "created_on",insertable = true,updatable = false)
     @CreationTimestamp
     private Date createdOn;

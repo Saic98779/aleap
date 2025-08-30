@@ -9,12 +9,16 @@ import com.metaverse.workflow.model.FinancialTarget;
 import com.metaverse.workflow.model.PhysicalTarget;
 import com.metaverse.workflow.model.outcomes.ProgramOutcomeTable;
 import com.metaverse.workflow.programoutcome.repository.ProgramOutcomeTableRepository;
+import com.metaverse.workflow.programoutcometargets.dto.ActivityGroupDTO;
+import com.metaverse.workflow.programoutcometargets.dto.FinancialTargetOverAllDTO;
+import com.metaverse.workflow.programoutcometargets.dto.FinancialTargetSummaryDTO;
 import com.metaverse.workflow.programoutcometargets.repository.FinancialRepository;
 import com.metaverse.workflow.programoutcometargets.repository.PhysicalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TargetServiceAdepter implements TargetService {
@@ -185,4 +189,55 @@ public class TargetServiceAdepter implements TargetService {
             return WorkflowResponse.builder().status(400).message("Physical Target Not Found in This ID"+physicalTargetId).build();
         }
     }
+
+    public FinancialTargetOverAllDTO getFinancialTargetSummary(Long agencyId) {
+        List<FinancialTargetSummaryDTO> records = financialRepository.getFinancialTargetSummary(agencyId)
+                .stream()
+                .map(row -> new FinancialTargetSummaryDTO(
+                        ((Number) row[0]).longValue(),
+                        (String) row[1],
+                        (String) row[2],
+                        normalizeFinancialYear((String) row[3]),
+                        row[4] != null ? ((Number) row[4]).doubleValue() : null,
+                        row[5] != null ? ((Number) row[5]).doubleValue() : null,
+                        row[6] != null ? ((Number) row[6]).doubleValue() : null,
+                        row[7] != null ? ((Number) row[7]).doubleValue() : null,
+                        row[8] != null ? ((Number) row[8]).doubleValue() : null
+                ))
+                .collect(Collectors.toList());
+
+        // Group by activity name
+        Map<String, ActivityGroupDTO> grouped = records.stream()
+                .collect(Collectors.groupingBy(
+                        FinancialTargetSummaryDTO::getActivityName,
+                        Collectors.collectingAndThen(Collectors.toList(), list -> {
+                            List<String> headers = list.stream()
+                                    .map(FinancialTargetSummaryDTO::getFinancialYear)
+                                    .filter(Objects::nonNull)
+                                    .distinct()
+                                    .collect(Collectors.toList());
+                            return new ActivityGroupDTO(headers, list);
+                        })
+                ));
+
+        // Calculate overall total
+        Double total = records.stream()
+                .mapToDouble(f -> f.getTotal() != null ? f.getTotal() : 0.0)
+                .sum();
+
+        return FinancialTargetOverAllDTO.builder()
+                .overallTarget(String.valueOf(total))
+                .groupedFinancialTargets(grouped)
+                .build();
+    }
+
+    private String normalizeFinancialYear(String raw) {
+        if (raw == null) return null;
+        raw = raw.trim();
+        if (raw.matches("\\d{4}-\\d{4}")) {
+            return raw.substring(0, 4) + "-" + raw.substring(7); // Example: "2023-2024" -> "2023-24"
+        }
+        return raw;
+    }
+
 }
