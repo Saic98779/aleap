@@ -35,10 +35,15 @@ public class WorkflowApplication extends SpringBootServletInitializer {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("*");
+				registry.addMapping("/**")
+						.allowedOrigins("http://98.87.249.76", "http://localhost:4200","https://localhost:5173","http://localhost:5173")  // or "http://98.87.249.76" if you want to restrict
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+						.allowedHeaders("*")
+						.allowCredentials(true); // set true only if using cookies
 			}
 		};
 	}
+
 
 	@Bean
 	CommandLineRunner init(StorageService storageService, CommonUtil commonUtil) {

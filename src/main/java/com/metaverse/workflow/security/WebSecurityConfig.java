@@ -51,8 +51,7 @@ public class WebSecurityConfig {
     CorsConfigurationSource  corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOriginPatterns(List.of(
-                "https://metaverseedu.in",
-                "https://metaverseedu.in/*",
+                "http://98.87.249.76",
                 "http://localhost:*"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
