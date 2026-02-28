@@ -8,7 +8,7 @@ public class CounsellorAllotmentMapper {
     public static CounsellorAllotment map(CounsellorRegistration counsellorRegistration)
     {
         return CounsellorAllotment.builder().counsellorRegistration(counsellorRegistration)
-                .startDate(counsellorRegistration.getDateOfSelection())
+                .startDate(counsellorRegistration.getDateOfHiring())
                 .build();
     }
 }
