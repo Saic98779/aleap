@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 
 @ControllerAdvice
 @Order
+@Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ApplicationAbstractException.class)
@@ -91,7 +93,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApplicationAPIResponse<?>> handleAllUncaughtException(
-            Exception ex, WebRequest request) {
+            Exception ex, WebRequest request) throws Exception {
+        // Re-throw internal Spring/SpringDoc framework exceptions so they are handled correctly
+        // (e.g. Springdoc api-docs generation errors, MVC binding exceptions)
+        String className = ex.getClass().getName();
+        if (className.startsWith("org.springframework") || className.startsWith("org.springdoc")) {
+            throw ex;
+        }
+        log.error("Unhandled exception: {}", ex.getMessage(), ex);
         return new ResponseEntity<>(
                 ApplicationAPIResponse.builder()
                         .message("An unexpected error occurred: " + ex.getMessage())

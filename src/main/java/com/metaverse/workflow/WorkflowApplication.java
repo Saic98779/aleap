@@ -36,8 +36,16 @@ public class WorkflowApplication extends SpringBootServletInitializer {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://98.87.249.76", "http://localhost:4200","https://localhost:5173","http://localhost:5173")  // or "http://98.87.249.76" if you want to restrict
-						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+						.allowedOrigins(
+								"http://98.87.249.76",
+								"https://98.87.249.76",
+								"http://localhost:4200",
+								"https://localhost:5173",
+								"http://localhost:5173",
+								"http://api.aleap.metaversedu.in",
+								"https://api.aleap.metaversedu.in"
+						)
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
 						.allowedHeaders("*")
 						.allowCredentials(true); // set true only if using cookies
 			}

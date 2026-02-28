@@ -5,6 +5,7 @@ import com.metaverse.workflow.common.util.RestControllerBase;
 import com.metaverse.workflow.exceptions.DataException;
 import com.metaverse.workflow.pdfandexcelgenerater.service.*;
 import com.metaverse.workflow.program.repository.ProgramRepository;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class FileGeneratorController {
     private final ParticipantTempExcel generateParticipantTempExcel;
 
     @GetMapping(value = "/program/pdf/{agencyId}", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> generatePdfReport(HttpServletResponse response, @PathVariable Long agencyId) throws IOException {
+    public ResponseEntity<InputStreamResource> generatePdfReport(@Parameter(hidden = true) HttpServletResponse response, @PathVariable Long agencyId) throws IOException {
         ByteArrayInputStream bis = programPdfGenerator.generateProgramsPdf(response, agencyId);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=users.pdf");
@@ -116,35 +117,35 @@ public class FileGeneratorController {
 
 
     @GetMapping("/program/excel")
-    public void generateExcelReport(HttpServletResponse response) throws IOException {
+    public void generateExcelReport(@Parameter(hidden = true) HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition", "attachment;fileName=users.xls");
         programExcelGenerator.generateProgramsExcel(response);
     }
 
     @GetMapping("/organization/excel")
-    public void generateOrganizationExcelReport(HttpServletResponse response) throws IOException {
+    public void generateOrganizationExcelReport(@Parameter(hidden = true) HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition", "attachment;fileName=users.xls");
         organizationExcelGenerator.exportOrganizationsToExcel(response);
     }
 
     @GetMapping("/location/excel/{agencyId}")
-    public void generateLocationExcelReport(HttpServletResponse response, @PathVariable Long agencyId) throws IOException {
+    public void generateLocationExcelReport(@Parameter(hidden = true) HttpServletResponse response, @PathVariable Long agencyId) throws IOException {
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition", "attachment;fileName=users.xls");
         locationExcelGenerator.locationsExportToExcel(response, agencyId);
     }
 
     @GetMapping("/resource/excel/{agencyId}")
-    public void generateResourceExcelReport(HttpServletResponse response, @PathVariable Long agencyId) throws IOException {
+    public void generateResourceExcelReport(@Parameter(hidden = true) HttpServletResponse response, @PathVariable Long agencyId) throws IOException {
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition", "attachment;fileName=users.xls");
         resourceExcelGenerator.exportAgencyResourcesToExcel(response, agencyId);
     }
 
     @GetMapping(value = "/program/summary/pdf/{programId}", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<?> generateProgramSummeryPDF(@PathVariable Long programId, HttpServletResponse response) {
+    public ResponseEntity<?> generateProgramSummeryPDF(@PathVariable Long programId, @Parameter(hidden = true) HttpServletResponse response) {
 
         ByteArrayInputStream bis;
         try {
@@ -162,7 +163,7 @@ public class FileGeneratorController {
     }
 
     @GetMapping("/program/summery/excel/{programId}")
-    public void generateProgramSummeryExcel(@PathVariable Long programId, HttpServletResponse response) throws IOException, DataException {
+    public void generateProgramSummeryExcel(@PathVariable Long programId, @Parameter(hidden = true) HttpServletResponse response) throws IOException, DataException {
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition", "attachment;fileName=users.xls");
         programSummeryExcelGenerator.generateProgramsExcel(response, programId);
@@ -170,7 +171,7 @@ public class FileGeneratorController {
     }
 
     @GetMapping("/export-program-expenditure")
-    public void exportProgramExpenditure(HttpServletResponse response,
+    public void exportProgramExpenditure(@Parameter(hidden = true) HttpServletResponse response,
                                          @RequestParam Long programId, @RequestParam Long agencyId) throws IOException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=" + "program_expenditure_" + programId + ".xls");
@@ -179,7 +180,7 @@ public class FileGeneratorController {
     }
 
     @GetMapping("/programs-status/{agencyId}")
-    public void exportProgramStatus(HttpServletResponse response, @PathVariable Long agencyId) throws IOException {
+    public void exportProgramStatus(@Parameter(hidden = true) HttpServletResponse response, @PathVariable Long agencyId) throws IOException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=" + "Program_status.xls");
 
@@ -187,7 +188,7 @@ public class FileGeneratorController {
     }
 
     @GetMapping("/programs-participant-status/{agencyId}")
-    public void exportProgramParticipantStatus(HttpServletResponse response, @PathVariable Long agencyId) throws IOException {
+    public void exportProgramParticipantStatus(@Parameter(hidden = true) HttpServletResponse response, @PathVariable Long agencyId) throws IOException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=" + "Program_Participant_status.xls");
 
@@ -195,7 +196,7 @@ public class FileGeneratorController {
     }
 
     @GetMapping("/trg/calender/agency-wise/{agencyId}")
-    public void exportProgramTrgCalender(HttpServletResponse response, @PathVariable Long agencyId) throws IOException {
+    public void exportProgramTrgCalender(@Parameter(hidden = true) HttpServletResponse response, @PathVariable Long agencyId) throws IOException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=" + "Trg_calender_agency_wise.xls");
 
@@ -203,7 +204,7 @@ public class FileGeneratorController {
     }
 
     @GetMapping("/trg/calender/district-wise")
-    public void exportProgramTrgCalenderDistrict(HttpServletResponse response,
+    public void exportProgramTrgCalenderDistrict(@Parameter(hidden = true) HttpServletResponse response,
                                                  @RequestParam String district, @RequestParam Long agencyId) throws IOException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=" + "Trg_calender_district_wise.xls");
@@ -212,7 +213,7 @@ public class FileGeneratorController {
     }
 
     @GetMapping("/trg/calender/date-wise")
-    public void exportProgramTrgCalenderDate(HttpServletResponse response,
+    public void exportProgramTrgCalenderDate(@Parameter(hidden = true) HttpServletResponse response,
                                              @RequestParam Long agencyId,
                                              @RequestParam String startDate,
                                              @RequestParam String endDate) throws IOException {
@@ -223,30 +224,30 @@ public class FileGeneratorController {
     }
 
     @GetMapping("/combined/expenditure/excel/{programId}")
-    public void exportExpenditure(HttpServletResponse response, @PathVariable Long programId) throws IOException, DataException {
+    public void exportExpenditure(@Parameter(hidden = true) HttpServletResponse response, @PathVariable Long programId) throws IOException, DataException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=" + "Total_Expenditure.xls");
-        combinedExpenditureExcel.generateCombinedExpenditureExcel(response,programId);
+        combinedExpenditureExcel.generateCombinedExpenditureExcel(response, programId);
     }
     @GetMapping("/program/excel/{agencyId}")
-    public void exportProgramDetails(HttpServletResponse response, @PathVariable Long agencyId) throws IOException, DataException {
+    public void exportProgramDetails(@Parameter(hidden = true) HttpServletResponse response, @PathVariable Long agencyId) throws IOException, DataException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=" + "Program_Details.xls");
-        generateProgramAllDataExcel.generateProgramsExcel(response,agencyId);
+        generateProgramAllDataExcel.generateProgramsExcel(response, agencyId);
     }
 
     @GetMapping("/program/excel/sheets")
-    public void exportProgramDetailsExcelSheets(HttpServletResponse response) throws IOException, DataException {
+    public void exportProgramDetailsExcelSheets(@Parameter(hidden = true) HttpServletResponse response) throws IOException, DataException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=" + "Program_Details.xls");
         programAllDataExcelSheets.generateProgramsExcel(response);
     }
 
     @GetMapping("/ParticipantTemp/excel/sheets/{programId}")
-    public void exportParticipantTempDetailsExcelSheets(HttpServletResponse response,@PathVariable Long programId) throws IOException, DataException {
+    public void exportParticipantTempDetailsExcelSheets(@Parameter(hidden = true) HttpServletResponse response, @PathVariable Long programId) throws IOException, DataException {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setHeader("Content-Disposition", "attachment; filename=Participant_Details.xlsx");
-        generateParticipantTempExcel.generateParticipantTempExcel(response,programId);
+        generateParticipantTempExcel.generateParticipantTempExcel(response, programId);
     }
 
 }

@@ -52,7 +52,11 @@ public class WebSecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOriginPatterns(List.of(
                 "http://98.87.249.76",
-                "http://localhost:*"
+                "https://98.87.249.76",
+                "http://localhost:*",
+                "https://localhost:*",
+                "http://api.aleap.metaversedu.in",
+                "https://api.aleap.metaversedu.in"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
@@ -73,12 +77,13 @@ public class WebSecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // use the correct bean
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/auth/**", "/workflow/auth/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
-                                "/tihcl/api/swagger-ui/**",
-                                "/tihcl/api/v3/api-docs/**"
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**"
                         ).permitAll()
                         .requestMatchers("/auth/register/**").permitAll()
                         .anyRequest().authenticated()

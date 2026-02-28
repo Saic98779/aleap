@@ -1,6 +1,7 @@
 package com.metaverse.workflow.common.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(name = "CommonAPIResponse")
 public class ApplicationAPIResponse<T> {
 
     private T data;
