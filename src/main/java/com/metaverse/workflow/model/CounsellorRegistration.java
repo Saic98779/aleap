@@ -29,13 +29,13 @@ public class CounsellorRegistration {
     @Column(name = "nameOf_counsellor")
     private String nameOfCounsellor;
 
-    @Column(name = "dateOfBirth")
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
     @Column(name = "gender")
     private String gender;
 
-    @Column(name = "socialcategory")
+    @Column(name = "social_category")
     private String socialCategory;
 
     @Column(name = "educational_qualification")
@@ -69,17 +69,17 @@ public class CounsellorRegistration {
     @Column(name = "specialization")
     private String specialization;
 
-    @Column(name = "contactNo")
+    @Column(name = "contact_no")
     private Long contactNo;
 
-    @Column(name = "altContactNo")
+    @Column(name = "altContact_no")
     private Long altContactNo;
 
-    @Column(name = "emailId")
+    @Column(name = "email_id")
     private String emailId;
 
-    @Column(name = "dateOfSelection")
-    Date dateOfSelection;
+    @Column(name = "date_of_hiring")
+    private Date dateOfHiring;
 
     @OneToMany(mappedBy = "counsellorRegistration", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
