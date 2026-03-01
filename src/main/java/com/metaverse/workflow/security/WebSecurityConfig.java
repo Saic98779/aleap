@@ -50,14 +50,7 @@ public class WebSecurityConfig {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     CorsConfigurationSource  corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of(
-                "http://98.87.249.76",
-                "https://98.87.249.76",
-                "http://localhost:*",
-                "https://localhost:*",
-                "http://api.aleap.metaversedu.in",
-                "https://api.aleap.metaversedu.in"
-        ));
+        config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
