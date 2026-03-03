@@ -17,7 +17,7 @@ import java.util.Date;
 public class CounsellorAllotment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "counsellor_allotment_id")
     private Long counsellorAllotmentId;
 
@@ -35,16 +35,14 @@ public class CounsellorAllotment {
     @Column(name = "end_date")
     private Date endDate;
 
-    @Column(name = "dateOfSelection")
-    Date dateOfSelection;
+    @Column(name = "date_of_allotment")
+    private Date dateOfAllotment;
 
-    @Column(name = "created_on", insertable = true, updatable = false)
     @CreationTimestamp
+    @Column(name = "created_on", updatable = false)
     private Date createdOn;
 
-    @Column(name = "updated_on", insertable = false, updatable = true)
     @UpdateTimestamp
+    @Column(name = "updated_on")
     private Date updatedOn;
-
-
 }

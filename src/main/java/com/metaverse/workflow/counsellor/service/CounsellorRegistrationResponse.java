@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -19,8 +21,7 @@ public class CounsellorRegistrationResponse {
     private String educationalQualification;
     private Integer districtId;
     private String districtName;
-    private Integer mandalId;
-    private String mandalName;
+    private List<CounsellorAllotmentsResponse> allotments;
     private String village;
     private String houseNo;
     private String streetName;

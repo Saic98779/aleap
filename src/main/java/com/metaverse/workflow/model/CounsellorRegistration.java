@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,8 +20,8 @@ import java.util.List;
 public class CounsellorRegistration {
 
     @Id
-    @Column(name = "counsellor_registration_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "counsellor_registration_id")
     private Long counsellorRegistrationId;
 
     @Column(name = "dateOf_registration")
@@ -81,15 +82,17 @@ public class CounsellorRegistration {
     @Column(name = "date_of_hiring")
     private Date dateOfHiring;
 
-    @OneToMany(mappedBy = "counsellorRegistration", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "counsellorRegistration",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @JsonIgnore
-    private List<CounsellorAllotment> counsellorAllotments;
+    private List<CounsellorAllotment> counsellorAllotments = new ArrayList<>();
 
-    @Column(name = "created_on", insertable = true, updatable = false)
+    @Column(name = "created_on", updatable = false)
     @CreationTimestamp
     private Date createdOn;
 
-    @Column(name = "updated_on", insertable = false, updatable = true)
+    @Column(name = "updated_on")
     @UpdateTimestamp
     private Date updatedOn;
 }
