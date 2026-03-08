@@ -45,10 +45,10 @@ stages {
     stage('Health Check') {
         steps {
             sh '''
-            ssh $SERVER "
-            curl -f http://localhost:8080 || exit 1
-            "
-            '''
+        ssh $SERVER "
+        curl -f http://localhost:8084/workflow/swagger-ui/index.html || exit 1
+        "
+        '''
         }
     }
 }
