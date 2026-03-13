@@ -26,8 +26,13 @@ public class ProjectDetails {
 
     private String ministryOrConcernedDepartment;
 
-    private String spocDetails;
-    // SPOC from Funding Agency - Name, Designation, Contact No, Email
+    private String spocName;
+
+    private String spocDesignation;
+
+    private String spocEmail;
+
+    private Long spocContact;
 
     private Double projectCostInLakhs;
 

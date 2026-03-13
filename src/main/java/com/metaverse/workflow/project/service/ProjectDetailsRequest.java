@@ -13,6 +13,10 @@ public class ProjectDetailsRequest {
     private String fundingAgency;
     private String ministryOrConcernedDepartment;
     private String spocDetails;
+    private String spocName;
+    private String spocDesignation;
+    private String spocEmail;
+    private Long spocContact;
     private Double projectCostInLakhs;
     private Date startDate;
     private Date endDate;

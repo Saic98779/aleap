@@ -11,7 +11,10 @@ public class ProjectDetailsMapper {
                 .titleOfProject(request.getTitleOfProject())
                 .fundingAgency(request.getFundingAgency())
                 .ministryOrConcernedDepartment(request.getMinistryOrConcernedDepartment())
-                .spocDetails(request.getSpocDetails())
+                .spocName(request.getSpocName())
+                .spocContact(request.getSpocContact())
+                .spocDesignation(request.getSpocDesignation())
+                .spocEmail(request.getSpocEmail())
                 .projectCostInLakhs(request.getProjectCostInLakhs())
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
@@ -32,7 +35,15 @@ public class ProjectDetailsMapper {
                 .titleOfProject(entity.getTitleOfProject())
                 .fundingAgency(entity.getFundingAgency())
                 .ministryOrConcernedDepartment(entity.getMinistryOrConcernedDepartment())
-                .spocDetails(entity.getSpocDetails())
+                .spocDetails(String.join(" ",
+                        entity.getSpocName(),
+                        entity.getSpocDesignation(),
+                        entity.getSpocContact() != null ? entity.getSpocContact().toString() : "",
+                        entity.getSpocEmail()))
+                .spocName(entity.getSpocName())
+                .spocDesignation(entity.getSpocDesignation())
+                .spocContact(entity.getSpocContact())
+                .spocEmail(entity.getSpocEmail())
                 .projectCostInLakhs(entity.getProjectCostInLakhs())
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())
