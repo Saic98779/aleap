@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 @Service
 public class FileService {
 
-    private static final Path UPLOAD_DIR = Paths.get("D:/workflow/msme_files");
+    private static final Path UPLOAD_DIR = Paths.get("/var/www/aleap-uploads");
     private static final String BASE_URL = "http://51.222.155.92/uploads";
 
     public String uploadFile(MultipartFile file, String directory) {
