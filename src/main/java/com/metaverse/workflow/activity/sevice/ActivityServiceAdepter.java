@@ -98,7 +98,7 @@ public class ActivityServiceAdepter implements ActivityService {
                 .status(400)
                 .build();
         List<ActivityResponse> response = activityList.stream()
-                .map(activity -> ActivityResponseMapper.map(activity))
+                .map(ActivityResponseMapper::map)
                 .collect(Collectors.toList());
 
         return WorkflowResponse.builder()
@@ -120,7 +120,7 @@ public class ActivityServiceAdepter implements ActivityService {
                     .build();
         }
         List<ActivityResponse> response = activityList.stream()
-                .map(activity -> ActivityResponseMapper.map(activity))
+                .map(ActivityResponseMapper::map)
                 .collect(Collectors.toList());
         return WorkflowResponse.builder()
                 .message("Success")

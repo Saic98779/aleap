@@ -19,9 +19,9 @@ public interface ProgramRepository extends JpaRepository<Program, Long> {
 
     List<Program> findByAgencyAgencyId(Long agencyId);
 
-    List<Program> findByAgencyAgencyIdAndStatus(Long agencyId, String status);
+    List<Program> findByAgencyAgencyIdAndStatusAndProjectDetailsId(Long agencyId, String status,Long projectId);
 
-    List<Program> findByAgencyAgencyIdAndStatusIn(Long agencyId, List<String> statuses);
+    List<Program> findByAgencyAgencyIdAndStatusInAndProjectDetailsId(Long agencyId, List<String> statuses,Long projectId);
 
     Boolean existsByLocation_LocationId(Long locationId);
 

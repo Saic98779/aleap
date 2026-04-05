@@ -5,11 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.metaverse.workflow.common.enums.ExpenditureType;
 import com.metaverse.workflow.common.response.WorkflowResponse;
 import com.metaverse.workflow.common.util.RestControllerBase;
-import com.metaverse.workflow.enums.BillRemarksStatus;
 import com.metaverse.workflow.exceptions.*;
 import com.metaverse.workflow.expenditure.service.*;
 import com.metaverse.workflow.model.HeadOfExpense;
-import io.swagger.v3.oas.annotations.Operation;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -208,26 +206,6 @@ public class ExpenditureController {
             return RestControllerBase.error(e);
         }
     }
-    @PutMapping("/save/remarks")
-    public ResponseEntity<?> addingRemarks(@RequestBody ExpenditureRemarksDTO remarksDTO,
-                                           @RequestParam(value = "status", required = false) BillRemarksStatus status) {
-        try {
-            return  ResponseEntity.ok(expenditureService.addRemarkOrResponse(remarksDTO, status));
-        } catch (DataException e) {
-            return RestControllerBase.error(e);
-        }
-    }
-
-    @PutMapping("/save/remarks/transaction")
-    public ResponseEntity<?> addingRemarksTransaction(@RequestBody ExpenditureRemarksDTO remarksDTO, @RequestParam("status") BillRemarksStatus status)
-    {
-        try {
-            return  ResponseEntity.ok(expenditureService.addRemarkOrResponseTransaction(remarksDTO, status));
-        } catch (DataException e) {
-            return RestControllerBase.error(e);
-        }
-    }
-
 }
 
 

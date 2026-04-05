@@ -21,4 +21,6 @@ public interface CounsellorService {
 
     WorkflowResponse getAllAllotments();
 
+    WorkflowResponse getByContact(Long contactNo) throws DataException;
+
 }

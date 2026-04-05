@@ -21,7 +21,7 @@ public class ProgramSummeryExcelGenerator {
     ProgramRepository programRepository;
 
     public void generateProgramsExcel(HttpServletResponse response, Long programId) throws IOException, DataException {
-        if (!programRepository.existsById(programId)) {
+      /*  if (!programRepository.existsById(programId)) {
             throw new DataException("No summary data found for program ID: " + programId, "PROGRAM-NOT-FOUND", 400);
         }
         WorkflowResponse summary = programService.getProgramSummaryByProgramId(programId);
@@ -69,6 +69,6 @@ public class ProgramSummeryExcelGenerator {
         ServletOutputStream ops = response.getOutputStream();
         workbook.write(ops);
         workbook.close();
-        ops.close();
+        ops.close();*/
     }
 }

@@ -33,7 +33,8 @@ public class SubActivity {
     @UpdateTimestamp
     private Date updatedOn;
 
+    @ManyToOne
+    @JoinColumn(name = "activity_id")  // FK column
     @JsonBackReference
-    @ManyToMany(mappedBy = "subActivities")
-    private List<Activity> activities;
+    private Activity activity;
 }

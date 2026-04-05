@@ -28,6 +28,7 @@ public class ProgramRequest {
     private Long spocContactNo;
     private Long locationId;
     private String kpi;
+    private Long projectId;
     private List<ProgramSession> programSessionList;
 
     @Builder

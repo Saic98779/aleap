@@ -58,7 +58,8 @@ public class ProgramStatusController {
 
     @GetMapping("/{agencyId}")
     public WorkflowResponse getProgramsByStatus(@PathVariable Long agencyId,
-                                                @RequestParam String status) {
+                                                @RequestParam String status,
+                                                @RequestParam Long projectId) {
         List<Program> programs = new ArrayList<>();
         if (isValidStatus(status)) {
             return WorkflowResponse.builder().message("Invalid status value." + status).status(HttpStatus.INTERNAL_SERVER_ERROR.value()).data(status).build();
@@ -70,10 +71,10 @@ public class ProgramStatusController {
                         ProgramStatusConstants.PARTICIPANTS_ADDED,
                         ProgramStatusConstants.ATTENDANCE_MARKED
                 );
-                programs = programRepository.findByAgencyAgencyIdAndStatusIn(agencyId, statuses);
+                programs = programRepository.findByAgencyAgencyIdAndStatusInAndProjectDetailsId(agencyId, statuses,projectId);
             }
             else {
-               programs = programRepository.findByAgencyAgencyIdAndStatus(agencyId, status);
+               programs = programRepository.findByAgencyAgencyIdAndStatusAndProjectDetailsId(agencyId, status,projectId);
             }
             List<ProgramResponse> response = programs != null ? programs.stream().map(ProgramResponseMapper::map).collect(Collectors.toList()) : null;
             return WorkflowResponse.builder().message("Success").status(200).data(response).build();

@@ -36,10 +36,4 @@ public class DistrictController {
     {
         return districtService.getAllMandalOfDistrictName(name);
     }
-    @GetMapping("/gram/panchayth/mandal/id/{mandalId}")
-    public ResponseEntity<WorkflowResponse> getAllGramPanchyatByMandalId(@PathVariable Integer mandalId)
-    {
-        WorkflowResponse response = districtService.getAllPanchayatByMandalId(mandalId);
-        return ResponseEntity.ok(response);
-    }
 }

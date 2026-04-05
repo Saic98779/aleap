@@ -2,7 +2,6 @@ package com.metaverse.workflow.expenditure.service;
 
 import com.metaverse.workflow.common.enums.ExpenditureType;
 import com.metaverse.workflow.common.response.WorkflowResponse;
-import com.metaverse.workflow.enums.BillRemarksStatus;
 import com.metaverse.workflow.exceptions.*;
 import com.metaverse.workflow.model.HeadOfExpense;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,7 +10,6 @@ import java.util.List;
 
 public interface ExpenditureService {
 
-    
     WorkflowResponse saveBulkExpenditure(BulkExpenditureRequest expenditureRequest, List<MultipartFile> multipartFiles) throws DataException;
     WorkflowResponse saveProgramExpenditure(ProgramExpenditureRequest expenditureRequest, List<MultipartFile> files) throws DataException;
     BulkExpenditureTransactionResponse saveTransaction(BulkExpenditureTransactionRequest request) throws DataException;
@@ -32,7 +30,5 @@ public interface ExpenditureService {
     WorkflowResponse deleteTransaction(Long transactionId) throws DataException;
     List<ProgramExpenditureResponse> getAllProgramExpenditure(Long agencyId, Long programId);
     ExpenditureSummaryResponse getExpenditureHeadOfExpenseWise(Long programId) throws DataException;
-    WorkflowResponse addRemarkOrResponse(ExpenditureRemarksDTO remarks, BillRemarksStatus status) throws DataException;
-    WorkflowResponse addRemarkOrResponseTransaction(ExpenditureRemarksDTO remarks, BillRemarksStatus status) throws DataException;
-}
+    }
 

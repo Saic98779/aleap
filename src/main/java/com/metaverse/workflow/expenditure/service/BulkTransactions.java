@@ -1,6 +1,5 @@
 package com.metaverse.workflow.expenditure.service;
 
-import com.metaverse.workflow.enums.BillRemarksStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,6 +34,5 @@ public class BulkTransactions {
     private String uploadBillUrl;
     private List<String> spiuComments;
     private List<String> agencyComments;
-    private BillRemarksStatus status;
 }
 

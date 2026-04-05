@@ -72,4 +72,8 @@ public class Program {
     @ManyToMany(cascade = CascadeType.ALL,targetEntity = Participant.class,mappedBy = "programs")
     private List<Participant> participants = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private ProjectDetails projectDetails;
+
 }

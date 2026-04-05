@@ -76,7 +76,7 @@ public class AuthenticationController {
                 .agency(agency.get())
                 .gender(request.getGender())
                 .mobileNo(request.getMobileNo())
-                .userRole(request.getUserRole().name())
+                .userRole(request.getUserRole())
                 .attempts(0)
                 .status("ACTIVE")
                 .build());
@@ -99,7 +99,7 @@ public class AuthenticationController {
                 .lastName(savedUser.getLastName())
                 .gender(savedUser.getGender())
                 .mobileNo(savedUser.getMobileNo())
-                .userRole(UserRole.valueOf(savedUser.getUserRole()))
+                .userRole(savedUser.getUserRole())
                 .agencyName(agency.map(Agency::getAgencyName).orElse(null))
                 .build();
 
@@ -142,7 +142,7 @@ public class AuthenticationController {
                     .lastName(user.getLastName())
                     .gender(user.getGender())
                     .mobileNo(user.getMobileNo())
-                    .userRole(UserRole.valueOf(user.getUserRole()))
+                    .userRole(user.getUserRole())
                     .build();
 
             ApplicationAPIResponse<AuthenticationResponse> response = ApplicationAPIResponse.<AuthenticationResponse>builder()

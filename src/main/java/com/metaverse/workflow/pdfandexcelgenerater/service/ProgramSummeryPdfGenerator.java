@@ -30,7 +30,7 @@ public class ProgramSummeryPdfGenerator {
     ProgramRepository programRepository;
 
     public ByteArrayInputStream generateProgramsSummeryPdf(HttpServletResponse response, Long programId) throws DataException {
-        if (!programRepository.existsById(programId)) {
+       /* if (!programRepository.existsById(programId)) {
             throw new DataException("No summary data found for program ID: " + programId, "PROGRAM-NOT-FOUND", 400);
         }
 
@@ -186,6 +186,7 @@ public class ProgramSummeryPdfGenerator {
         while (stars.length() < 5) {
             stars.append("☆");
         }
-        return stars.toString();
+        return stars.toString();*/
+        return null;
     }
 }

@@ -46,6 +46,11 @@ public class ProjectDetailsController {
         return ResponseEntity.ok(service.getAll());
     }
 
+    @GetMapping("/dropdown")
+    public ResponseEntity<?> getAllProjects() {
+        return ResponseEntity.ok(service.getAllProjectDropdown());
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
