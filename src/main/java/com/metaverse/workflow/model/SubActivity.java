@@ -2,22 +2,18 @@ package com.metaverse.workflow.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.List;
 
-
+@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Getter
 @Table(name="sub_activity")
 public class SubActivity {
     @Id
