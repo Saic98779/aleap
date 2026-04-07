@@ -25,6 +25,7 @@ public class ProjectDetailsMapper {
                 .expectedImpactOrOutcome(request.getExpectedImpactOrOutcome())
                 .sanctionOrderFilePath(request.getSanctionOrderFilePath())
                 .beneficiariesUploadFilePath(request.getBeneficiariesUploadFilePath())
+                .implementingAgency(request.getImplementingAgency())
                 .build();
     }
 
@@ -54,8 +55,8 @@ public class ProjectDetailsMapper {
                 .expectedImpactOrOutcome(entity.getExpectedImpactOrOutcome())
                 .sanctionOrderFilePath(entity.getSanctionOrderFilePath())
                 .beneficiariesUploadFilePath(entity.getBeneficiariesUploadFilePath())
-                .createdOn(entity.getCreatedOn())
-                .updatedOn(entity.getUpdatedOn())
+                .implementingAgency(entity.getImplementingAgency())
+
                 .build();
     }
     public static ProjectDetailsResponseDropdown mapToResponseDropdown(ProjectDetails entity) {
@@ -64,5 +65,33 @@ public class ProjectDetailsMapper {
                 .project_id(entity.getId())
                 .titleOfProject(entity.getTitleOfProject())
                 .build();
+    }
+
+    public static void mapToEntityForUpdate(ProjectDetailsRequest request, ProjectDetails entity) {
+
+        entity.setTitleOfProject(request.getTitleOfProject());
+        entity.setFundingAgency(request.getFundingAgency());
+        entity.setMinistryOrConcernedDepartment(request.getMinistryOrConcernedDepartment());
+
+        entity.setSpocName(request.getSpocName());
+        entity.setSpocContact(request.getSpocContact());
+        entity.setSpocDesignation(request.getSpocDesignation());
+        entity.setSpocEmail(request.getSpocEmail());
+
+        entity.setProjectCostInLakhs(request.getProjectCostInLakhs());
+        entity.setStartDate(request.getStartDate());
+        entity.setEndDate(request.getEndDate());
+
+        entity.setProjectHeadAndTeam(request.getProjectHeadAndTeam());
+        entity.setBriefDescription(request.getBriefDescription());
+        entity.setProjectLocation(request.getProjectLocation());
+
+        entity.setTotalNoOfBeneficiaries(request.getTotalNoOfBeneficiaries());
+        entity.setExpectedImpactOrOutcome(request.getExpectedImpactOrOutcome());
+
+        entity.setSanctionOrderFilePath(request.getSanctionOrderFilePath());
+        entity.setBeneficiariesUploadFilePath(request.getBeneficiariesUploadFilePath());
+
+        entity.setImplementingAgency(request.getImplementingAgency());
     }
 }

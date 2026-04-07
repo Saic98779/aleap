@@ -2,6 +2,7 @@ package com.metaverse.workflow.project.service;
 
 
 
+import com.metaverse.workflow.common.enums.ImplementingAgency;
 import lombok.*;
 
 import java.util.Date;
@@ -27,4 +28,5 @@ public class ProjectDetailsRequest {
     private String expectedImpactOrOutcome;
     private String sanctionOrderFilePath;
     private String beneficiariesUploadFilePath;
+    private ImplementingAgency implementingAgency;
 }

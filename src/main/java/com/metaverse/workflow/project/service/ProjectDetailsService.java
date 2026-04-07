@@ -37,11 +37,8 @@ public class ProjectDetailsService {
                         "NOT_FOUND",
                         404
                 ));
-
-        ProjectDetails updated = ProjectDetailsMapper.mapToEntity(request);
-        updated.setId(existing.getId());
-
-        ProjectDetails saved = repository.save(updated);
+        ProjectDetailsMapper.mapToEntityForUpdate(request, existing);
+        ProjectDetails saved = repository.save(existing);
 
         return WorkflowResponse.builder()
                 .status(200)

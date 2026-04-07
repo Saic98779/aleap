@@ -1,5 +1,6 @@
 package com.metaverse.workflow.model;
 
+import com.metaverse.workflow.common.enums.ImplementingAgency;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -55,6 +56,9 @@ public class ProjectDetails {
     private String sanctionOrderFilePath;
 
     private String beneficiariesUploadFilePath;
+
+    @Enumerated(EnumType.STRING)
+    private ImplementingAgency implementingAgency;
 
     @CreationTimestamp
     @Column(updatable = false)
