@@ -12,11 +12,8 @@ public interface DistrictService {
     WorkflowResponse getAllMandalOfDistrict(Integer id);
     WorkflowResponse getDistrictById(Integer id);
     WorkflowResponse getAllMandals();
-    WorkflowResponse getAllPanchayatByMandalId(Integer mandalId);
     List<District> getAllDistrictsEntity();
     List<Mandal> getAllMandalsEntity();
-
     Mandal getMandalById(Integer id);
-
     WorkflowResponse getAllMandalOfDistrictName(String name);
 }

@@ -58,4 +58,11 @@ public class ProjectDetailsMapper {
                 .updatedOn(entity.getUpdatedOn())
                 .build();
     }
+    public static ProjectDetailsResponseDropdown mapToResponseDropdown(ProjectDetails entity) {
+
+        return ProjectDetailsResponseDropdown.builder()
+                .project_id(entity.getId())
+                .titleOfProject(entity.getTitleOfProject())
+                .build();
+    }
 }

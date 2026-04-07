@@ -1,6 +1,5 @@
 package com.metaverse.workflow.expenditure.service;
 
-import com.metaverse.workflow.enums.BillRemarksStatus;
 import lombok.*;
 
 import java.util.List;
@@ -38,5 +37,4 @@ public class ProgramExpenditureResponse {
     private String checkDate;
     private List<String> spiuComments;
     private List<String> agencyComments;
-    private BillRemarksStatus status;
 }

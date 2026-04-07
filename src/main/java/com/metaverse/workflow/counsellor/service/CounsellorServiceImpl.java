@@ -217,4 +217,15 @@ public class CounsellorServiceImpl implements CounsellorService {
                 .build();
     }
 
+    public WorkflowResponse getByContact(Long contactNo) throws DataException {
+        CounsellorRegistration counsellorRegistration = counsellorRegistrationRepository.findByContactNo(contactNo)
+                .orElseThrow(() ->
+                        new DataException("Counsellor Not Found", "NOT_FOUND",400));
+        return WorkflowResponse.builder()
+                .status(200)
+                .message("success")
+                .data(counsellorRegistration)
+                .build();
+    }
+
 }

@@ -20,7 +20,7 @@ public class LoginUserResponseMapper {
                 .lastName(user.getLastName())
                 .password(user.getPassword())
                 .gender(user.getGender())
-                .userRole(UserRole.valueOf(user.getUserRole()))
+                .userRole(user.getUserRole())
                 .agencyId(user.getAgency() != null ? user.getAgency().getAgencyId() : null)
                 .agencyName(user.getAgency() != null ? user.getAgency().getAgencyName() : null)
                 .build();
@@ -40,7 +40,7 @@ public class LoginUserResponseMapper {
                 .lastName(user.getLastName())
                 .password(user.getPassword())
                 .gender(user.getGender())
-                .userRole(UserRole.valueOf(user.getUserRole()))
+                .userRole(user.getUserRole())
                 .agencyId(user.getAgency() != null ? user.getAgency().getAgencyId() : null)
                 .agencyName(user.getAgency() != null ? user.getAgency().getAgencyName() : null)
                 .build();

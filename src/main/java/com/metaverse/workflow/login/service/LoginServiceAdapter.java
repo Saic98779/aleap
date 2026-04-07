@@ -44,12 +44,12 @@ public class LoginServiceAdapter implements LoginService {
             Optional<Agency> agency = agencyRepository.findById(request.getAgencyId());
             if (!agency.isPresent()) return WorkflowResponse.builder().status(400).message("Invalid Agency").build();
             user = loginRepository.save(User.builder().userId(request.getEmail()).email(request.getEmail()).firstName(request.getFirstName())
-                    .lastName(request.getLastName()).mobileNo(request.getMobileNo()).userRole(request.getUserRole().name())
+                    .lastName(request.getLastName()).mobileNo(request.getMobileNo()).userRole(request.getUserRole())
                     .gender(request.getGender()).password(defaultPassword).agency(agency.get()).build());
             return WorkflowResponse.builder().status(200).message("Success").data(LoginUserResponseMapper.map(user)).build();
         } else {
             user = loginRepository.save(User.builder().userId(request.getEmail()).email(request.getEmail()).firstName(request.getFirstName())
-                    .lastName(request.getLastName()).mobileNo(request.getMobileNo()).userRole(request.getUserRole().name())
+                    .lastName(request.getLastName()).mobileNo(request.getMobileNo()).userRole(request.getUserRole())
                     .gender(request.getGender()).password(defaultPassword).build());
             return WorkflowResponse.builder().status(200).message("Success").data(LoginUserResponseMapper.map(user)).build();
         }
@@ -78,7 +78,7 @@ public class LoginServiceAdapter implements LoginService {
         log.info("users requested entered in service");
         List<User> userList = loginRepository.findAll();
         log.info("users list : " + userList.size());
-        List<LoginUserResponse> response = userList != null ? userList.stream().map(user -> LoginUserResponseMapper.mapUser(user)).collect(Collectors.toList()) : null;
+        List<LoginUserResponse> response = userList != null ? userList.stream().map(LoginUserResponseMapper::mapUser).collect(Collectors.toList()) : null;
         return WorkflowResponse.builder().status(200).message("Success").data(response).build();
     }
 
@@ -89,7 +89,7 @@ public class LoginServiceAdapter implements LoginService {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 
-            // Check old password (supports plain text legacy and BCrypt)
+            // Check old password (supports plain text legacy and B Crypt)
             boolean oldPasswordMatches = user.getPassword().equals(request.getOldPassword()) ||
                     passwordEncoder.matches(request.getOldPassword(), user.getPassword());
 

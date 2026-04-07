@@ -1,10 +1,9 @@
 package com.metaverse.workflow.program.service;
 
-import com.metaverse.workflow.ProgramMonitoring.repository.ProgramMonitoringRepo;
+
 import com.metaverse.workflow.activity.repository.ActivityRepository;
 import com.metaverse.workflow.activity.repository.SubActivityRepository;
 import com.metaverse.workflow.agency.repository.AgencyRepository;
-import com.metaverse.workflow.callcenter.repository.CallCenterVerificationRepository;
 import com.metaverse.workflow.common.constants.Constants;
 import com.metaverse.workflow.common.fileservice.FileSystemStorageService;
 import com.metaverse.workflow.common.fileservice.StorageService;
@@ -23,6 +22,7 @@ import com.metaverse.workflow.participant.repository.ParticipantRepository;
 import com.metaverse.workflow.participant.repository.ParticipantTempRepository;
 import com.metaverse.workflow.participant.service.ParticipantResponse;
 import com.metaverse.workflow.program.repository.*;
+import com.metaverse.workflow.project.repository.ProjectDetailsRepository;
 import com.metaverse.workflow.resouce.repository.ResourceRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -77,9 +77,6 @@ public class ProgramServiceAdapter implements ProgramService {
     ProgramTypeRepository programTypeRepository;
 
     @Autowired
-    CallCenterVerificationRepository callCenterVerificationRepository;
-
-    @Autowired
     MediaCoverageRepository mediaCoverageRepository;
 
     @Autowired
@@ -96,29 +93,36 @@ public class ProgramServiceAdapter implements ProgramService {
     NotificationService notificationService;
 
     @Autowired
-    ProgramMonitoringFeedBackRepository monitoringFeedBackRepository;
-
-    @Autowired
     NotificationRepository notificationRepository;
 
     @Autowired
     private ParticipantTempRepository participantTempRepository;
 
+    @Autowired
+    private ProjectDetailsRepository projectDetailsRepository;
+
     @PersistenceContext
     private EntityManager em;
 
-    @Autowired
-    private ProgramMonitoringRepo programMonitoringRepo;
 
     @Override
-    public WorkflowResponse createProgram(ProgramRequest request) {
+    public WorkflowResponse createProgram(ProgramRequest request) throws DataException {
         Optional<Location> location = null;
         Program program = null;
         Optional<Agency> agency = agencyRepository.findById(request.getAgencyId());
+         ProjectDetails projectDetails = projectDetailsRepository.findById(request.getProjectId())
+                .orElseThrow(() -> new DataException(
+                        "Project not found with id " + request.getProjectId(),
+                        "NOT_FOUND",
+                        404
+                ));
+
         if (!agency.isPresent()) return WorkflowResponse.builder().status(400).message("Invalid Agency").build();
         if (request.getLocationId() != null) {
             location = locationRepository.findById(request.getLocationId());
-            program = programRepository.save(ProgramRequestMapper.map(request, agency.get(), location.get()));
+            program = ProgramRequestMapper.map(request, agency.get(), location.get());
+            program.setProjectDetails(projectDetails);
+            program = programRepository.save(program);
         }
         NotificationRequest notificationRequest = new NotificationRequest();
         notificationRequest.setProgramId(program.getProgramId());
@@ -252,19 +256,6 @@ public class ProgramServiceAdapter implements ProgramService {
         List<ProgramTypeResponse> typeResponses = programTypeList.stream().map(ProgramTypeResponseMapper::map).toList();
         return WorkflowResponse.builder().status(200).message("Success").data(typeResponses).build();
 
-    }
-
-    @Override
-    public WorkflowResponse getProgramParticipantAndVerifications(Long id) {
-        Optional<Program> program = programRepository.findById(id);
-        if (!program.isPresent()) return WorkflowResponse.builder().status(400).message("Invalid Program Id").build();
-        List<ParticipantResponse> response = ProgramResponseMapper.mapProgramParticipants(program.get().getParticipants());
-        List<Participant> participantList = program.get().getParticipants();
-        if (participantList == null || participantList.size() == 0)
-            return WorkflowResponse.builder().status(400).message("Invalid Program Id").build();
-        List<CallCenterVerification> callCenterVerificationList = callCenterVerificationRepository.findByProgramId(id);
-        List<ParticipantVerificationResponse> responseList = ProgramResponseMapper.mapProgramParticipantVerification(participantList, callCenterVerificationList);
-        return WorkflowResponse.builder().status(200).message("Success").data(responseList).build();
     }
 
     @Override
@@ -445,19 +436,7 @@ public class ProgramServiceAdapter implements ProgramService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public WorkflowResponse getProgramSummaryByProgramId(Long programId) throws DataException {
 
-        Program program = programRepository.findById(programId)
-                .orElseThrow(() -> new DataException("Program data not found", "PROGRAM-DATA-NOT-FOUND", 400));
-        List<ProgramMonitoring> monitoringList = programMonitoringRepo.findByProgramId(programId);
-        double monitoringScore = monitoringList.stream().mapToDouble(ProgramMonitoring::getTotalScore).sum();
-        return WorkflowResponse.builder()
-                .status(200)
-                .message("Success")
-                .data(ProgramSummeryMapper.map(program,(monitoringScore /monitoringList.size() )))
-                .build();
-    }
 
     @Override
     public String deleteProgramSession(Long sessionId) {
@@ -478,54 +457,8 @@ public class ProgramServiceAdapter implements ProgramService {
     }
 
 
-    public WorkflowResponse saveFeedback(ProgramMonitoringFeedBackRequest request) {
-        if (monitoringFeedBackRepository.existsByProgramId(request.getProgramId())) {
-            return WorkflowResponse.builder().status(400)
-                    .message("Feedback already exists for Program ID: " + request.getProgramId())
-                    .build();
-        }
-        ProgramMonitoringFeedBack monitoringFeedBack = ProgramMonitoringFeedBackMapper.mapRequest(request);
-        ProgramMonitoringFeedBack savedFeedBack = monitoringFeedBackRepository.save(monitoringFeedBack);
-        return WorkflowResponse.builder().status(200).message("Success")
-                .data(ProgramMonitoringFeedBackMapper.mapResponse(monitoringFeedBack)).build();
-    }
-
-    @Override
-    public WorkflowResponse updateFeedback(Long monitorId, ProgramMonitoringFeedBackRequest request) throws DataException {
-        ProgramMonitoringFeedBack entity = monitoringFeedBackRepository.findById(monitorId)
-                .orElseThrow(() -> new DataException("Feedback not found with id: " + monitorId, "FEEDBACK_NOT_FOUND", 400));
-
-        ProgramMonitoringFeedBackMapper.updateProgramMonitoringFeedBack(entity, request);
-        ProgramMonitoringFeedBack updated = monitoringFeedBackRepository.save(entity);
-        return WorkflowResponse.builder().status(200).message("FeedBack Update successfully.. ")
-                .data(ProgramMonitoringFeedBackMapper.mapResponse(updated)).build();
-    }
-
-    @Override
-    public WorkflowResponse getFeedBackByProgramId(Long programId) throws DataException {
-        Program program = programRepository.findById(programId)
-                .orElseThrow(() -> new DataException("Program data not found", "PROGRAM-DATA-NOT-FOUND", 400));
-        List<ProgramMonitoringFeedBack> monitoringFeedBackList = monitoringFeedBackRepository.findByProgramId(programId);
-
-        return WorkflowResponse.builder().status(200).message("Success")
-                .data(monitoringFeedBackList.stream().map(ProgramMonitoringFeedBackMapper::mapResponse)).build();
-    }
-
-    @Override
-    public WorkflowResponse getFeedBackById(Long feedBackId) {
-        if (monitoringFeedBackRepository.existsById(feedBackId)) {
-            Optional<ProgramMonitoringFeedBack> feedBack = monitoringFeedBackRepository.findById(feedBackId);
-            return WorkflowResponse.builder().status(200).message("Success")
-                    .data(ProgramMonitoringFeedBackMapper.mapResponse(feedBack.get())).build();
-
-        }
-        return WorkflowResponse.builder()
-                .status(400)
-                .message("MonitorFeedback not found for the given ID: " + feedBackId)
-                .build();
 
 
-    }
 
     @Override
     public WorkflowResponse getProgramDetailsFroFeedBack(Long programId) throws DataException {

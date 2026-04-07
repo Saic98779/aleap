@@ -38,7 +38,4 @@ public class Mandal {
     @UpdateTimestamp
     private Date updatedOn;
 
-    @Column(name = "gram_panchayats_list")
-    @OneToMany(mappedBy = "mandal", cascade = CascadeType.ALL)
-    private List<GramPanchayat> gramPanchayats;
 }

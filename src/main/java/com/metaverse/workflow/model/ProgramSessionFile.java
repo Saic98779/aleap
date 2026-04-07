@@ -31,7 +31,4 @@ public class ProgramSessionFile {
     @ManyToOne
     @JoinColumn(name = "bulk_expenditure_id")
     private BulkExpenditure bulkExpenditure;
-    @ManyToOne
-    @JoinColumn(name = "budget_id")
-    private OtherTrainingBudget otherTrainingBudget;
 }

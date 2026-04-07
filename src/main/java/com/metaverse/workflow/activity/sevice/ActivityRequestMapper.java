@@ -10,7 +10,7 @@ public class ActivityRequestMapper {
         return Activity.builder()
                 .agency(agency)
                 .activityName(activityRequest.getActivityName())
-                .subActivities(activityRequest.getSubActivities())
+               // .subActivities(activityRequest.getSubActivities())
                 .build();
     }
 }

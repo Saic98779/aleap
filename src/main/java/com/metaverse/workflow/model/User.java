@@ -1,6 +1,7 @@
 package com.metaverse.workflow.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.metaverse.workflow.common.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,8 +25,9 @@ public class User {
     private String email;
     @Column(name="password")
     private String password;
+    @Enumerated(EnumType.STRING)
     @Column(name="user_role")
-    private String userRole;
+    private UserRole userRole;
     @Column(name="attempts")
     private Integer attempts;
     @Column(name="status")

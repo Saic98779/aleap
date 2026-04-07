@@ -3,10 +3,8 @@ package com.metaverse.workflow.districtswithmandals.service;
 
 import com.metaverse.workflow.common.response.WorkflowResponse;
 import com.metaverse.workflow.districtswithmandals.repository.DistrictRepository;
-import com.metaverse.workflow.districtswithmandals.repository.GramPanchayatRepository;
 import com.metaverse.workflow.districtswithmandals.repository.MandalRepositrory;
 import com.metaverse.workflow.model.District;
-import com.metaverse.workflow.model.GramPanchayat;
 import com.metaverse.workflow.model.Mandal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +22,6 @@ public class DistrictServiceAdepter implements DistrictService {
     private DistrictRepository districtRepository;
     @Autowired
     private MandalRepositrory mandalRepositrory;
-    @Autowired
-    GramPanchayatRepository gramPanchayatRepository;
 
     @Override
     public WorkflowResponse saveDistrict(DistrictRequest districtRequest) {
@@ -89,20 +85,7 @@ public class DistrictServiceAdepter implements DistrictService {
                 .build();
     }
 
-    @Override
-    public WorkflowResponse getAllPanchayatByMandalId(Integer mandalId) {
-        List<GramPanchayat> pantchaytsList = gramPanchayatRepository.findByMandalMandalId(mandalId);
-        if(pantchaytsList.isEmpty())return WorkflowResponse.builder().message("Gram Panchyat Not found")
-                .status(400).build();
-        List<GramPanchayatResponse> responces = pantchaytsList.stream()
-                .map(gp -> GramPanchayatResponse.builder().gramPanchayatID(gp.getGramPanchayatID()).gramPanchayatName(gp.getGramPanchayatName()).build())
-                .collect(Collectors.toList());
-        return WorkflowResponse.builder()
-                .message("Success")
-                .status(200)
-                .data(responces)
-                .build();
-    }
+
 
     @Override
     public WorkflowResponse getAllMandalOfDistrict(Integer districtaId) {

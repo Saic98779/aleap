@@ -72,4 +72,15 @@ public class CounsellorController {
     public ResponseEntity<WorkflowResponse> getCounsellorByMandal(@PathVariable Integer mandalId) {
         return ResponseEntity.ok(counsellorService.getCounsellorByMandal(mandalId));
     }
+
+    @GetMapping("/by-contact")
+    public ResponseEntity<?> getCounsellorByContact(@RequestParam Long contactNo) {
+        WorkflowResponse counsellor = null;
+        try {
+            counsellor = counsellorService.getByContact(contactNo);
+        } catch (DataException e) {
+            return RestControllerBase.error(e);
+        }
+        return ResponseEntity.ok(counsellor);
+    }
 }

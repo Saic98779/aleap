@@ -56,9 +56,14 @@ public class ProgramController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = Exception.class)))
     })
     @PostMapping(value = "/program/create", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<WorkflowResponse> createProgram(@RequestBody ProgramRequest request) {
+    public ResponseEntity<?> createProgram(@RequestBody ProgramRequest request) {
         log.info("Program controller, title : {}", request.getProgramTitle());
-        WorkflowResponse response = programService.createProgram(request);
+        WorkflowResponse response = null;
+        try {
+            response = programService.createProgram(request);
+        } catch (DataException e) {
+            return RestControllerBase.error(e);
+        }
         return ResponseEntity.ok(response);
     }
 
@@ -137,13 +142,6 @@ public class ProgramController {
         WorkflowResponse response = programService.getAllProgramTypeByAgencyId(agencyId);
         return ResponseEntity.ok(response);
     }
-
-    @GetMapping("/program/participant-verification/{programId}")
-    public ResponseEntity<WorkflowResponse> getParticipantAndVerificationByProgramId(@PathVariable("programId") Long programId) {
-        WorkflowResponse response = programService.getProgramParticipantAndVerifications(programId);
-        return ResponseEntity.ok(response);
-    }
-
 
     @PostMapping(value = "/program/session/update", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE},
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -266,55 +264,10 @@ public class ProgramController {
         return ResponseEntity.ok(fileResponses);
     }
 
-
-
-
-    @GetMapping("/program/summary/{programId}")
-    public ResponseEntity<?> getProgramSummeryById(@PathVariable("programId") Long programId) {
-        try {
-            return ResponseEntity.ok(programService.getProgramSummaryByProgramId(programId));
-        } catch (DataException exception) {
-            return RestControllerBase.error(exception);
-        }
-
-    }
-
     @GetMapping("/program/participants/dropdown/{programId}")
     public ResponseEntity<WorkflowResponse> getParticipantsByProgramIdDropDown(@PathVariable("programId") Long programId) {
         WorkflowResponse response = programService.getProgramParticipantsDropDown(programId);
         return ResponseEntity.ok(response);
-    }
-
-    @PostMapping("/program/feedback/save")
-    public ResponseEntity<WorkflowResponse> saveFeedback(@RequestBody ProgramMonitoringFeedBackRequest request)
-    {
-        return ResponseEntity.ok(programService.saveFeedback(request));
-    }
-    @PostMapping("/program/feedback/update/{monitorId}")
-    public ResponseEntity<?> updateFeedback(@PathVariable Long monitorId, @RequestBody ProgramMonitoringFeedBackRequest request
-    ) {
-        WorkflowResponse response ;
-        try {
-            response = programService.updateFeedback(monitorId, request);
-        } catch (DataException exception) {
-            return RestControllerBase.error(exception);
-        }
-        return ResponseEntity.ok(response);
-    }
-    @GetMapping("/program/feedback/{programId}")
-    public ResponseEntity<?> getFeedbackByProgramId(@PathVariable Long programId) {
-        WorkflowResponse response ;
-        try {
-            response = programService.getFeedBackByProgramId(programId);
-        } catch (DataException exception) {
-            return RestControllerBase.error(exception);
-        }
-        return ResponseEntity.ok(response);
-    }
-    @GetMapping("/program/feedback/id/{feedBackId}")
-    public ResponseEntity<?> getFeedbackById(@PathVariable Long feedBackId) {
-
-        return ResponseEntity.ok(programService.getFeedBackById(feedBackId));
     }
 
     @GetMapping("/program/details/for/feedback/{programId}")

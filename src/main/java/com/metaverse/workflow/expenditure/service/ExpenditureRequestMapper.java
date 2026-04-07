@@ -51,8 +51,6 @@ public class ExpenditureRequestMapper {
                 .uploadBillUrl(request.getUploadBillUrl())
                 .checkDate(DateUtil.stringToDate(request.getCheckDate(),"dd-MM-yyyy"))
                 .checkNo(request.getCheckNo())
-                .spiuComments(null)
-                .agencyComments(null)
                 .build();
 
     }
@@ -92,8 +90,6 @@ public class ExpenditureRequestMapper {
                 .headOfExpense(headOfExpense)
                 .consumedQuantity(request.getConsumedQuantity())
                 .allocatedCost(request.getAllocatedCost())
-                .spiuComments(null)
-                .agencyComments(null)
                 .build();
     }
 

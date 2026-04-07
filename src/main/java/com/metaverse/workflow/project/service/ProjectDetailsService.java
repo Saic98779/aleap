@@ -79,6 +79,19 @@ public class ProjectDetailsService {
                 .data(list)
                 .build();
     }
+    public WorkflowResponse getAllProjectDropdown() {
+
+        List<ProjectDetailsResponseDropdown> list = repository.findAll()
+                .stream()
+                .map(ProjectDetailsMapper::mapToResponseDropdown)
+                .collect(Collectors.toList());
+
+        return WorkflowResponse.builder()
+                .status(200)
+                .message("Success")
+                .data(list)
+                .build();
+    }
 
     public WorkflowResponse delete(Long id) throws DataException {
 

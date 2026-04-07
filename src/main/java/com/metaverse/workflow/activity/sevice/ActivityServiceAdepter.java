@@ -29,25 +29,45 @@ public class ActivityServiceAdepter implements ActivityService {
 
     @Override
     public WorkflowResponse saveActivity(ActivityRequest activityRequest) {
-        List<SubActivity> savedSubActivities = activityRequest.getSubActivities()
-                .stream()
-                .map(subActivityRepository::save)
-                .toList();
-        Agency agency = agencyService.getAgencyById(activityRequest.getAgencyId());
-        if (agency == null) return WorkflowResponse.builder()
-                .message("agency Not found")
-                .status(400)
-                .build();
-        Activity activity = ActivityRequestMapper.map(activityRequest, agency);
 
-        activityRepository.save(activity);
+        // 🔹 Get Agency
+        Agency agency = agencyService.getAgencyById(activityRequest.getAgencyId());
+        if (agency == null) {
+            return WorkflowResponse.builder()
+                    .message("Agency not found")
+                    .status(400)
+                    .build();
+        }
+
+        // 🔹 Create Activity
+        Activity activity = new Activity();
+        activity.setActivityName(activityRequest.getActivityName());
+        activity.setAgency(agency);
+
+        // 🔹 Convert String → SubActivity
+        if (activityRequest.getSubActivities() != null) {
+            List<SubActivity> subActivityList = activityRequest.getSubActivities()
+                    .stream()
+                    .map(name -> {
+                        SubActivity sub = new SubActivity();
+                        sub.setSubActivityName(name);
+                        sub.setActivity(activity);
+                        return sub;
+                    })
+                    .toList();
+
+            activity.setSubActivities(subActivityList);
+        }
+
+        // 🔹 Save (cascade will handle subActivities)
+        Activity savedActivity = activityRepository.save(activity);
+
         return WorkflowResponse.builder()
                 .message("Activity saved successfully")
                 .status(200)
-                .data(ActivityResponseMapper.map(activity))
+                .data(ActivityResponseMapper.map(savedActivity))
                 .build();
     }
-
     @Override
     public List<Activity> getActivityEntities() {
         return activityRepository.findAll();
@@ -98,7 +118,7 @@ public class ActivityServiceAdepter implements ActivityService {
                 .status(400)
                 .build();
         List<ActivityResponse> response = activityList.stream()
-                .map(activity -> ActivityResponseMapper.map(activity))
+                .map(ActivityResponseMapper::map)
                 .collect(Collectors.toList());
 
         return WorkflowResponse.builder()
@@ -120,7 +140,7 @@ public class ActivityServiceAdepter implements ActivityService {
                     .build();
         }
         List<ActivityResponse> response = activityList.stream()
-                .map(activity -> ActivityResponseMapper.map(activity))
+                .map(ActivityResponseMapper::map)
                 .collect(Collectors.toList());
         return WorkflowResponse.builder()
                 .message("Success")

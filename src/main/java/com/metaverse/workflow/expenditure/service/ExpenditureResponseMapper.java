@@ -85,21 +85,6 @@ public class ExpenditureResponseMapper {
                 .modeOfPayment(expenditure.getExpenditure().getModeOfPayment())
                 .remarks(expenditure.getExpenditure().getRemarks())
                 .uploadBillUrl(expenditure.getExpenditure().getUploadBillUrl())
-                .spiuComments(
-                        Optional.ofNullable(expenditure.getSpiuComments())
-                                .orElse(List.of())
-                                .stream()
-                                .map(SpiuComments::getFormattedRemark)
-                                .toList()
-                )
-                .agencyComments(
-                        Optional.ofNullable(expenditure.getAgencyComments())
-                                .orElse(List.of())
-                                .stream()
-                                .map(AgencyComments::getFormattedRemark)
-                                .toList()
-                )
-                .status(expenditure.getStatus())
                 .build();
     }
 
@@ -129,21 +114,6 @@ public class ExpenditureResponseMapper {
                 .uploadBillUrl(expenditure.getUploadBillUrl())
                 .checkNo(expenditure.getCheckNo())
                 .checkDate(DateUtil.dateToString(expenditure.getCheckDate(),"dd-MM-yyyy"))
-                .spiuComments(
-                        Optional.ofNullable(expenditure.getSpiuComments())
-                                .orElse(List.of())
-                                .stream()
-                                .map(SpiuComments::getFormattedRemark)
-                                .toList()
-                )
-                .agencyComments(
-                        Optional.ofNullable(expenditure.getAgencyComments())
-                                .orElse(List.of())
-                                .stream()
-                                .map(AgencyComments::getFormattedRemark)
-                                .toList()
-                )
-                .status(expenditure.getStatus())
                 .build();
 
     }
@@ -174,21 +144,6 @@ public class ExpenditureResponseMapper {
                 .fileIds(fileIds)
                 .checkNo(expenditure.getCheckNo())
                 .checkDate(DateUtil.dateToString(expenditure.getCheckDate(),"dd-MM-yyyy"))
-                .spiuComments(
-                        Optional.ofNullable(expenditure.getSpiuComments())
-                                .orElse(List.of())
-                                .stream()
-                                .map(SpiuComments::getFormattedRemark)
-                                .toList()
-                )
-                .agencyComments(
-                        Optional.ofNullable(expenditure.getAgencyComments())
-                                .orElse(List.of())
-                                .stream()
-                                .map(AgencyComments::getFormattedRemark)
-                                .toList()
-                )
-                .status(expenditure.getStatus())
                 .build();
 
     }
