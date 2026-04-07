@@ -3,6 +3,8 @@ package com.metaverse.workflow.common.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class DateUtil {
@@ -22,30 +24,37 @@ public class DateUtil {
             throw new RuntimeException(e);
         }
     }
-//    public static  Date stringToDate(String dateString, String format)  {
-//        for (String formats : DATE_FORMATS) {
-//            try {
-//                DateFormat sdf = new SimpleDateFormat(formats);
-//                sdf.setLenient(false);
-//                return sdf.parse(dateString);
-//            } catch (ParseException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//        return null;
-//
-//    }
-//    private static final String[] DATE_FORMATS = {
-//            "yyyy-MM-dd",
-//            "dd-MM-yyyy",
-//            "MM-dd-yyyy",
-//            "dd/MM/yyyy",
-//            "MM/dd/yyyy",
-//            "yyyy/MM/dd",
-//            "dd MMM yyyy",
-//            "MMM dd, yyyy",
-//            "yyyyMMdd"
-//    };
+    public static Date stringToDates(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return null;
+        }
 
+        String[] dateFormats = {"yyyy-MM-dd", "dd-MM-yyyy", "dd-MMM-yyyy", "d-MMM-yyyy", "d-MM-yyyy"};
+
+        for (String format : dateFormats) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat(format);
+                sdf.setLenient(false);
+                Date parsedDate = sdf.parse(input);
+                return java.sql.Date.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(parsedDate));
+            } catch (ParseException e) {
+                // Try next format
+            }
+        }
+
+        return null;
+    }
+
+    public static LocalDate stringToDate(String date)
+    {
+        if (date == null) return null;
+        try{
+            return LocalDate.parse(date);
+        }
+        catch(Exception e)
+        {
+            return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        }
+    }
 
 }
