@@ -16,6 +16,7 @@ public class ESDPTrainingRequestMapper
                 .participantId(participant)
                 .organizationId(organization)
                 .agency(agency)
+                .interestedSectorsForEsdp(request.getInterestedSectorsForEsdp())
                 .build();
     }
 }

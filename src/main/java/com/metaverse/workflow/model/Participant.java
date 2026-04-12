@@ -69,4 +69,8 @@ public class Participant {
 	private Date updatedOn;
 	@Column(name = "member_id",unique = true)
 	private String memberId;
+
+	private Long projectId;
+	private Integer age;
+	private Date dob;
 }

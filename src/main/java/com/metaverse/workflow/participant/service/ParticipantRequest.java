@@ -2,6 +2,7 @@ package com.metaverse.workflow.participant.service;
 
 import lombok.*;
 
+import java.util.Date;
 import java.util.Set;
 
 @Builder
@@ -28,4 +29,7 @@ public class ParticipantRequest {
 	private String needAssessmentMethodology;
 	private Long organizationId;
 	private Set<Long> programIds;
+	private Long projectId;
+	private Integer age;
+	private String dob;
 }

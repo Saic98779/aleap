@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.List;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -38,7 +40,6 @@ public class ESDPTraining {
     @JoinColumn(name = "agency_id", referencedColumnName = "agency_id")
     private Agency agency;
 
-
     @Column(name = "dateofawareness_program")
     private Date dateOfAwarenessProgram;
 
@@ -51,6 +52,11 @@ public class ESDPTraining {
     @Column(name = "selectedfor_training")
     private String selectedForTraining;
 
+    @ElementCollection
+    @CollectionTable(name = "interested_sectors_for_esdp",
+            joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "sector")
+    private List<String> interestedSectorsForEsdp;
 
     @Column(name="created_on", insertable = true, updatable = false)
     @CreationTimestamp

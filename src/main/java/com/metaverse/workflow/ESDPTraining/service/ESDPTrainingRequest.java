@@ -2,6 +2,8 @@ package com.metaverse.workflow.ESDPTraining.service;
 
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @Getter
 @Setter
@@ -15,4 +17,5 @@ public class ESDPTrainingRequest {
     private String interestedInAttending15Days;
     private String dateOfApplicationReceived;
     private String selectedForTraining;
+    private List<String> interestedSectorsForEsdp;
 }

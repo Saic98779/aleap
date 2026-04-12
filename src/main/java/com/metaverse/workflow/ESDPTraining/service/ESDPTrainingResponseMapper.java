@@ -17,6 +17,7 @@ public class ESDPTrainingResponseMapper {
                 .interestedInAttending15Days(esdpTraining.getInterestedInAttending15Days())
                 .dateOfApplicationReceived(DateUtil.dateToString(esdpTraining.getDateOfApplicationReceived(),"dd-MM-yyyy"))
                 .selectedForTraining(esdpTraining.getSelectedForTraining())
+                .interestedSectorsForEsdp(esdpTraining.getInterestedSectorsForEsdp())
                 .build();
     }
 }
