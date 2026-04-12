@@ -38,6 +38,9 @@ public class ParticipantResponseMapper {
 				.mandal(participant.getOrganization() != null ? CommonUtil.districtMap.get( Integer.valueOf(participant.getOrganization().getMandal())) : null)
 				.nameOfVO(participant.getOrganization() != null ? participant.getOrganization().getNameOfTheVO() : null)
 				.sectorList(participant.getOrganization() != null ? participant.getOrganization().getSectors().stream().map(Sector::getSectorName).toList() : null)
+				.projectId(participant.getProjectId())
+				.age(participant.getAge())
+				.dob(DateUtil.dateToString(participant.getDob(), "dd-MM-yyyy"))
 				.build();
 	}
 	public static ParticipantResponse mapToTempParticipant(ParticipantTemp participant)
@@ -127,6 +130,9 @@ public class ParticipantResponseMapper {
 				.isCertificateIssued(participant.getIsCertificateIssued())
 				.certificateIssueDate(DateUtil.dateToString(participant.getCertificateIssueDate(), "dd-MM-yyyy"))
 				.needAssessmentMethodology(participant.getNeedAssessmentMethodology())
+				.projectId(participant.getProjectId())
+				.age(participant.getAge())
+				.dob(DateUtil.dateToString(participant.getDob(), "dd-MM-yyyy"))
 				.build();
 	}
 

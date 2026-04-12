@@ -1,5 +1,6 @@
 package com.metaverse.workflow.participant.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -40,4 +41,7 @@ public class ParticipantResponse {
 	private Boolean hasError;
 	private String errorMessage;
 	private Boolean isDeleted;
+	private Long projectId;
+	private Integer age;
+	private String dob;
 }

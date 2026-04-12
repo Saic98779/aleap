@@ -29,6 +29,9 @@ public class ParticipantRequestMapper {
 				.needAssessmentMethodology(request.getNeedAssessmentMethodology())
 				.organization(organization != null ? organization : null)
 				.programs(programs!= null && programs.size() > 0 ? programs : null)
+				.projectId(request.getProjectId())
+				.age(request.getAge())
+				.dob(DateUtil.stringToDates(request.getDob()))
 				.build();
 	}
 	public static Participant mapUpdate(ParticipantRequest request,Participant participant)
@@ -51,6 +54,9 @@ public class ParticipantRequestMapper {
 		existingParticipant.setIsCertificateIssued(request.getIsCertificateIssued());
 		existingParticipant.setCertificateIssueDate(DateUtil.stringToDate(request.getCertificateIssueDate(), "dd-MM-yyyy"));
 		existingParticipant.setNeedAssessmentMethodology(request.getNeedAssessmentMethodology());
+		existingParticipant.setProjectId(request.getProjectId());
+		existingParticipant.setAge(request.getAge());
+		existingParticipant.setDob(DateUtil.stringToDates(request.getDob()));
 		return existingParticipant;
 	}
 
@@ -73,6 +79,9 @@ public class ParticipantRequestMapper {
 				.isCertificateIssued(request.getIsCertificateIssued())
 				.certificateIssueDate(DateUtil.stringToDate(request.getCertificateIssueDate(), "dd-MM-yyyy"))
 				.needAssessmentMethodology(request.getNeedAssessmentMethodology())
+				.projectId(request.getProjectId())
+				.age(request.getAge())
+				.dob(DateUtil.stringToDates(request.getDob()))
 				.build();
 	}
 

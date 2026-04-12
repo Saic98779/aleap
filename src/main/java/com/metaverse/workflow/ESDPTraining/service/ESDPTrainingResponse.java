@@ -25,4 +25,5 @@ public class ESDPTrainingResponse {
     private String interestedInAttending15Days;
     private String dateOfApplicationReceived;
     private String selectedForTraining;
+    private List<String> interestedSectorsForEsdp;
 }
