@@ -1,7 +1,7 @@
 package com.metaverse.workflow.model;
 
 import com.metaverse.workflow.common.enums.MembershipType;
-import com.metaverse.workflow.common.enums.PaymentMode;
+import com.metaverse.workflow.common.enums.PaymentType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,6 +25,7 @@ public class MembershipApplication {
     private String name;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "membership_type")
     private MembershipType membershipType;
 
     private LocalDate applicationDate;
@@ -46,7 +47,8 @@ public class MembershipApplication {
     private Double amountPaid;
 
     @Enumerated(EnumType.STRING)
-    private PaymentMode paymentMode;
+    @Column(name = "payment_type")
+    private PaymentType paymentType;
 
     private String chequeOrDraftNumber;
 

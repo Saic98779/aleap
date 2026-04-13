@@ -1,24 +1,26 @@
-package com.metaverse.workflow.enquiry.controller;
+package com.metaverse.workflow.employee.controller;
 
-import com.metaverse.workflow.enquiry.service.EnquiryRequest;
-import com.metaverse.workflow.enquiry.service.EnquiryService;
+import com.metaverse.workflow.employee.service.EmployeeRequest;
+import com.metaverse.workflow.employee.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/enquiry")
+@RequestMapping("/employee")
 @RequiredArgsConstructor
-public class EnquiryController {
-    private final EnquiryService service;
+public class EmployeeController {
+
+    private final EmployeeService service;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody EnquiryRequest request) {
+    public ResponseEntity<?> create(@RequestBody EmployeeRequest request) {
         return ResponseEntity.ok(service.create(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody EnquiryRequest request) {
+    public ResponseEntity<?> update(@PathVariable Long id,
+                                    @RequestBody EmployeeRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
