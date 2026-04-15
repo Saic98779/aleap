@@ -23,9 +23,12 @@ public class EventDetailsMapper {
                 .totalDays(entity.getTotalDays())
                 .startTime(entity.getStartTime())
                 .endTime(entity.getEndTime())
+                .state(entity.getState())
                 .district(entity.getDistrict())
                 .mandal(entity.getMandal())
                 .village(entity.getVillage())
+                .houseNoOrDoorNo(entity.getHouseNoOrDoorNo())
+                .houseNoOrDoorNo(entity.getHouseNoOrDoorNo())
                 .pinCode(entity.getPinCode())
                 .totalParticipants(entity.getTotalParticipants())
                 .build();
@@ -48,9 +51,12 @@ public class EventDetailsMapper {
                 .totalDays(dto.getTotalDays())
                 .startTime(dto.getStartTime())
                 .endTime(dto.getEndTime())
+                .state(dto.getState())
                 .district(dto.getDistrict())
                 .mandal(dto.getMandal())
                 .village(dto.getVillage())
+                .streetOrBlock(dto.getStreetOrBlock())
+                .houseNoOrDoorNo(dto.getHouseNoOrDoorNo())
                 .pinCode(dto.getPinCode())
                 .totalParticipants(dto.getTotalParticipants())
                 .build();
@@ -72,9 +78,12 @@ public class EventDetailsMapper {
         entity.setTotalDays(request.getTotalDays());
         entity.setStartTime(request.getStartTime());
         entity.setEndTime(request.getEndTime());
+        entity.setState(request.getState());
         entity.setDistrict(request.getDistrict());
         entity.setMandal(request.getMandal());
         entity.setVillage(request.getVillage());
+        entity.setStreetOrBlock(request.getStreetOrBlock());
+        entity.setHouseNoOrDoorNo(request.getHouseNoOrDoorNo());
         entity.setPinCode(request.getPinCode());
         entity.setTotalParticipants(request.getTotalParticipants());
     }

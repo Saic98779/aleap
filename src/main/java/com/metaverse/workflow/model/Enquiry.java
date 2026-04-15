@@ -27,8 +27,13 @@ public class Enquiry {
 
     private String whatsappNumber;
 
-    @Column(columnDefinition = "TEXT")
-    private String address;
+    private String state;
+    private String district;
+    private String mandal;
+    private String village;
+    private String streetOrBlock;
+    private String houseNoOrDoorNo;
+    private String pinCode;
 
     private String email;
 

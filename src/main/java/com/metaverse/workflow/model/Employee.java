@@ -38,7 +38,9 @@ public class Employee {
 
     private String email;
 
-    private String photo; // store URL or file path
+    private String photo;
+
+    private String file;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

@@ -26,7 +26,7 @@ public class Mandal {
     private  String mandalName;
 
     @ManyToOne
-    @JoinColumn(name="district")
+    @JoinColumn(name="district_id")
     @JsonIgnore
     private District district;
 

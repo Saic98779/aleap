@@ -3,8 +3,7 @@ package com.metaverse.workflow.common.util;
 import com.metaverse.workflow.activity.repository.ActivityRepository;
 import com.metaverse.workflow.activity.sevice.ActivityService;
 import com.metaverse.workflow.agency.service.AgencyService;
-import com.metaverse.workflow.common.response.WorkflowResponse;
-import com.metaverse.workflow.districtswithmandals.service.DistrictService;
+import com.metaverse.workflow.districtswithmandals.service.Service;
 import com.metaverse.workflow.model.*;
 import com.metaverse.workflow.participant.service.ParticipantService;
 import jakarta.annotation.PostConstruct;
@@ -24,7 +23,7 @@ import java.util.stream.Collectors;
 public class CommonUtil {
 
     @Autowired
-    DistrictService districtService;
+    Service districtService;
     @Autowired
     ActivityService activityService;
     @Autowired

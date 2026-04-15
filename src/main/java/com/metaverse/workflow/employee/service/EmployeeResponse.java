@@ -18,4 +18,5 @@ public class EmployeeResponse {
     private String phone;
     private String email;
     private String photo;
+    private String file;
 }

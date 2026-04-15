@@ -17,6 +17,7 @@ public class EmployeeMapper {
                 .phone(request.getPhone())
                 .email(request.getEmail())
                 .photo(request.getPhoto())
+                .file(request.getFile())
                 .build();
     }
 
@@ -33,6 +34,7 @@ public class EmployeeMapper {
                 .phone(employee.getPhone())
                 .email(employee.getEmail())
                 .photo(employee.getPhoto())
+                .file(employee.getFile())
                 .build();
     }
 
@@ -47,5 +49,6 @@ public class EmployeeMapper {
         employee.setPhone(request.getPhone());
         employee.setEmail(request.getEmail());
         employee.setPhoto(request.getPhoto());
+        employee.setFile(request.getFile());
     }
 }
