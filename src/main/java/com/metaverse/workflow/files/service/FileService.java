@@ -16,7 +16,8 @@ import java.util.stream.Stream;
 public class FileService {
 
     private static final Path UPLOAD_DIR = Paths.get("/var/www/aleap-uploads");
-    private static final String BASE_URL = "http://51.222.155.92/aleap-uploads";
+    private static final String BASE_URL = "https://51.222.155.92/aleap-uploads";
+   //private static final String BASE_URL = "https://aleap.metaversedu/aleap-uploads";
 
     public String uploadFile(MultipartFile file, String directory) {
 
