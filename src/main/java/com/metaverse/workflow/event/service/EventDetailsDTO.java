@@ -24,9 +24,12 @@ public class EventDetailsDTO {
     private Integer totalDays;
     private String startTime;
     private String endTime;
+    private String state;
     private String district;
     private String mandal;
     private String village;
+    private String streetOrBlock;
+    private String houseNoOrDoorNo;
     private String pinCode;
     private Integer totalParticipants;
 }

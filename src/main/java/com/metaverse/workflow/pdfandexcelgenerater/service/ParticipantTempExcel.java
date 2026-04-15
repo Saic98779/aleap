@@ -1,13 +1,12 @@
 package com.metaverse.workflow.pdfandexcelgenerater.service;
 
 import com.metaverse.workflow.districtswithmandals.repository.DistrictRepository;
-import com.metaverse.workflow.districtswithmandals.repository.MandalRepositrory;
+import com.metaverse.workflow.districtswithmandals.repository.MandalRepository;
 import com.metaverse.workflow.exceptions.DataException;
 import com.metaverse.workflow.model.*;
 import com.metaverse.workflow.participant.repository.ParticipantTempRepository;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ public class ParticipantTempExcel {
     private DistrictRepository  districtRepository;
 
     @Autowired
-    private MandalRepositrory mandalRepositrory;
+    private MandalRepository mandalRepository;
 
 
     public void generateParticipantTempExcel(HttpServletResponse response, Long programId) throws IOException, DataException {
@@ -125,7 +124,7 @@ public class ParticipantTempExcel {
                     District district = byId.get();
                     dataRow.createCell(18).setCellValue(district.getDistrictName() != null ? district.getDistrictName() : "");
                 }
-                Optional<Mandal> byId1 = mandalRepositrory.findById(Integer.valueOf(organizationTemp.getMandal()));
+                Optional<Mandal> byId1 = mandalRepository.findById(Integer.valueOf(organizationTemp.getMandal()));
                 if(byId1.isPresent()) {
                     Mandal mandal  = byId1.get();
                     dataRow.createCell(19).setCellValue(mandal.getMandalName() != null ? mandal.getMandalName() : "");

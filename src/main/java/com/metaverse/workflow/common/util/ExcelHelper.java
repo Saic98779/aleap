@@ -1,7 +1,6 @@
 package com.metaverse.workflow.common.util;
 
 import com.metaverse.workflow.districtswithmandals.repository.DistrictRepository;
-import com.metaverse.workflow.districtswithmandals.repository.MandalRepositrory;
 import com.metaverse.workflow.model.*;
 import com.metaverse.workflow.organization.repository.OrganizationRepository;
 import com.metaverse.workflow.organization.repository.OrganizationTempRepository;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -85,12 +83,6 @@ public class ExcelHelper {
                     Organization organization = existingOrganizations.get(0);
                     ParticipantTemp tempParticipant = parseTempParticipant(currentRow, organization, programId);
                     tempParticipants.add(tempParticipant);
-//
-//                    Map<String, String> record = new HashMap<>();
-//                    record.put("participantName", getCellValue(currentRow, 0));
-//                    record.put("organizationName", organizationName);
-//                    record.put("reason", "Organization already exists, stored in OrganizationTemp");
-//                    notStoredRecords.add(record);
                 } else {
                     Organization newOrg = createOrganizationFromRow(currentRow);
                     organizationRepository.save(newOrg);

@@ -6,14 +6,15 @@ import com.metaverse.workflow.model.Mandal;
 
 import java.util.List;
 
-public interface DistrictService {
-    WorkflowResponse saveDistrict(DistrictRequest districtRequest);
+public interface Service {
+
     WorkflowResponse getAllDistricts();
     WorkflowResponse getAllMandalOfDistrict(Integer id);
     WorkflowResponse getDistrictById(Integer id);
-    WorkflowResponse getAllMandals();
     List<District> getAllDistrictsEntity();
     List<Mandal> getAllMandalsEntity();
-    Mandal getMandalById(Integer id);
     WorkflowResponse getAllMandalOfDistrictName(String name);
+    WorkflowResponse getAllStates();
+    WorkflowResponse getDistrictsByStateId(Integer stateId);
+    WorkflowResponse getMandalsByDistrictId(Integer id);
 }

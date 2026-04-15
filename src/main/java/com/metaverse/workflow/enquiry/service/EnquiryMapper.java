@@ -10,7 +10,6 @@ public class EnquiryMapper {
         return Enquiry.builder()
                 .walkInName(request.getWalkInName())
                 .whatsappNumber(request.getWhatsappNumber())
-                .address(request.getAddress())
                 .email(request.getEmail())
                 .startupOrCompanyName(request.getStartupOrCompanyName())
                 .innovationDescription(request.getInnovationDescription())
@@ -24,6 +23,12 @@ public class EnquiryMapper {
                 .officialName(request.getOfficialName())
                 .discussionSummary(request.getDiscussionSummary())
                 .enquiryFromFilePath(request.getEnquiryFromFilePath())
+                .state(request.getState())
+                .district(request.getDistrict())
+                .mandal(request.getMandal())
+                .streetOrBlock(request.getStreetOrBlock())
+                .houseNoOrDoorNo(request.getHouseNoOrDoorNo())
+                .pinCode(request.getPinCode())
                 .build();
     }
 
@@ -33,7 +38,6 @@ public class EnquiryMapper {
                 .id(entity.getId())
                 .walkInName(entity.getWalkInName())
                 .whatsappNumber(entity.getWhatsappNumber())
-                .address(entity.getAddress())
                 .email(entity.getEmail())
                 .startupOrCompanyName(entity.getStartupOrCompanyName())
                 .innovationDescription(entity.getInnovationDescription())
@@ -47,6 +51,12 @@ public class EnquiryMapper {
                 .officialName(entity.getOfficialName())
                 .discussionSummary(entity.getDiscussionSummary())
                 .enquiryFromFilePath(entity.getEnquiryFromFilePath())
+                .state(entity.getState())
+                .district(entity.getDistrict())
+                .mandal(entity.getMandal())
+                .streetOrBlock(entity.getStreetOrBlock())
+                .houseNoOrDoorNo(entity.getHouseNoOrDoorNo())
+                .pinCode(entity.getPinCode())
                 .build();
     }
 }

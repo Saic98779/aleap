@@ -34,16 +34,13 @@ public class EnquiryService {
 
         entity.setWalkInName(request.getWalkInName());
         entity.setWhatsappNumber(request.getWhatsappNumber());
-        entity.setAddress(request.getAddress());
         entity.setEmail(request.getEmail());
         entity.setStartupOrCompanyName(request.getStartupOrCompanyName());
         entity.setInnovationDescription(request.getInnovationDescription());
         entity.setSectors(request.getSectors());
-
         if (request.getStage() != null) {
             entity.setStage(Stage.valueOf(request.getStage()));
         }
-
         entity.setIncubationSupportRequired(request.getIncubationSupportRequired());
         entity.setIncubationSupportDescription(request.getIncubationSupportDescription());
         entity.setSupportServicesRequired(request.getSupportServicesRequired());
@@ -52,6 +49,12 @@ public class EnquiryService {
         entity.setOfficialName(request.getOfficialName());
         entity.setDiscussionSummary(request.getDiscussionSummary());
         entity.setEnquiryFromFilePath(request.getEnquiryFromFilePath());
+        entity.setState(request.getState());
+        entity.setDistrict(request.getDistrict());
+        entity.setMandal(request.getMandal());
+        entity.setStreetOrBlock(request.getStreetOrBlock());
+        entity.setHouseNoOrDoorNo(request.getHouseNoOrDoorNo());
+        entity.setPinCode(request.getPinCode());
 
         Enquiry updated = repository.save(entity);
 

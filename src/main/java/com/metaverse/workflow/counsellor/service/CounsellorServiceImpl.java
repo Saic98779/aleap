@@ -4,14 +4,13 @@ import com.metaverse.workflow.common.response.WorkflowResponse;
 import com.metaverse.workflow.common.util.DateUtil;
 import com.metaverse.workflow.counsellor.repository.CounsellorAllotmentRepository;
 import com.metaverse.workflow.counsellor.repository.CounsellorRegistrationRepository;
-import com.metaverse.workflow.districtswithmandals.repository.MandalRepositrory;
+import com.metaverse.workflow.districtswithmandals.repository.MandalRepository;
 import com.metaverse.workflow.exceptions.DataException;
 import com.metaverse.workflow.model.CounsellorAllotment;
 import com.metaverse.workflow.model.CounsellorRegistration;
 import com.metaverse.workflow.model.Mandal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,13 +24,13 @@ public class CounsellorServiceImpl implements CounsellorService {
     @Autowired
     CounsellorAllotmentRepository counsellorAllotmentRepository;
     @Autowired
-    MandalRepositrory mandalRepositrory;
+    MandalRepository mandalRepository;
 
     @Override
     public WorkflowResponse saveCounsellor(CounsellorRegistrationRequest request) {
 
         CounsellorRegistration counsellor = CounsellorRequestMapper.map(request);
-        Optional<Mandal> mandal = mandalRepositrory.findById(request.getMandalId());
+        Optional<Mandal> mandal = mandalRepository.findById(request.getMandalId());
         if (mandal.isEmpty()) {
             return WorkflowResponse.builder()
                     .status(400)
@@ -163,7 +162,7 @@ public class CounsellorServiceImpl implements CounsellorService {
         CounsellorRegistration counsellor = counsellorRegistrationRepository.findById(request.getCounsellorRegistrationId())
                 .orElseThrow(() ->
                         new DataException("Counsellor Not Found", "NOT_FOUND"));
-        Mandal mandal = mandalRepositrory.findById(request.getMandalId())
+        Mandal mandal = mandalRepository.findById(request.getMandalId())
                 .orElseThrow(() ->
                         new DataException("Mandal Not Found","NOT_FOUND"));
 
@@ -186,7 +185,7 @@ public class CounsellorServiceImpl implements CounsellorService {
     @Override
     public WorkflowResponse getCounsellorByMandal(Integer mandalId) {
 
-        Optional<Mandal> mandalOpt = mandalRepositrory.findById(mandalId);
+        Optional<Mandal> mandalOpt = mandalRepository.findById(mandalId);
         if (mandalOpt.isEmpty()) {
             return WorkflowResponse.builder()
                     .status(404)

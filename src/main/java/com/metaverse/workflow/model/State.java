@@ -1,6 +1,5 @@
 package com.metaverse.workflow.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,24 +7,21 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.List;
-
-
 @Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="district")
-public class District {
-
+@Table(name="state")
+public class State {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "district_Id")
-    private  Integer districtId;
+    @Column(name = "state_Id")
+    private  Integer stateId;
 
-    @Column(name = "districtName")
-    private String districtName;
+    @Column(name = "stateName")
+    private String stateName;
 
     @Column(name="created_on",insertable = true,updatable = false)
     @CreationTimestamp
@@ -35,11 +31,6 @@ public class District {
     @UpdateTimestamp
     private Date updatedOn;
 
-    @OneToMany(mappedBy = "district", cascade = CascadeType.ALL)
-    private List<Mandal> mandals;
-
-    @ManyToOne
-    @JoinColumn(name="state_id")
-    @JsonIgnore
-    private State state;
+    @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
+    private List<District> districts;
 }

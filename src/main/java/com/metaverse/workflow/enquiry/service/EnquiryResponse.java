@@ -14,7 +14,13 @@ public class EnquiryResponse {
     private Long id;
     private String walkInName;
     private String whatsappNumber;
-    private String address;
+    private String state;
+    private String district;
+    private String mandal;
+    private String village;
+    private String streetOrBlock;
+    private String houseNoOrDoorNo;
+    private String pinCode;
     private String email;
     private String startupOrCompanyName;
     private String innovationDescription;
