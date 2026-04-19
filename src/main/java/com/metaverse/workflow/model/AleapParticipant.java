@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "aleap_participant")
@@ -27,6 +28,7 @@ public class AleapParticipant {
     private Date dob;
     private Integer age;
 
+    @Column(unique = true)
     private String aadharNo;
     private Long contactNo;
     private String email;
@@ -50,4 +52,7 @@ public class AleapParticipant {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @ManyToMany(mappedBy = "participants")
+    private List<EventDetails> events;
 }

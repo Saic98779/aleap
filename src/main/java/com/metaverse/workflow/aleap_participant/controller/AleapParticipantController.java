@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/aleap-participant")
 @RequiredArgsConstructor
@@ -42,19 +44,32 @@ public class AleapParticipantController {
         return ResponseEntity.ok(service.delete(id));
     }
 
-    @GetMapping("/mobile/{mobileNumber}")
-    public ResponseEntity<?> findByMobileNumber(@PathVariable Long mobileNumber) {
-        return ResponseEntity.ok(service.findByMobileNumber(mobileNumber));
+    @GetMapping("/aadhar/{aadharNo}")
+    public ResponseEntity<?> findByAadharNumber(@PathVariable String aadharNo) {
+        return ResponseEntity.ok(service.findByAadharNumber(aadharNo));
     }
 
     @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public WorkflowResponse uploadExcel(@RequestParam("file") MultipartFile file) {
-        if (!file.getOriginalFilename().endsWith(".xlsx")) {
+    public WorkflowResponse uploadExcel(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam List<Long> eventIds) {
+
+        if (file.getOriginalFilename() == null ||
+                !file.getOriginalFilename().toLowerCase().endsWith(".xlsx")) {
+
             return WorkflowResponse.builder()
                     .message("Only Excel (.xlsx) files allowed")
                     .status(400)
                     .build();
         }
-        return service.uploadExcel(file);
+
+        if (eventIds == null || eventIds.isEmpty()) {
+            return WorkflowResponse.builder()
+                    .message("eventIds are required")
+                    .status(400)
+                    .build();
+        }
+
+        return service.uploadExcel(file, eventIds);
     }
 }

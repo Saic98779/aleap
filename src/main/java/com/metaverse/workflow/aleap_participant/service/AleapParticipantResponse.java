@@ -4,6 +4,9 @@ package com.metaverse.workflow.aleap_participant.service;
 
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.List;
+
 @Data
 @Builder
 public class AleapParticipantResponse {
@@ -34,4 +37,5 @@ public class AleapParticipantResponse {
     private String pinCode;
 
     private String otherInformation;
+    private List<EventRes> events;
 }
