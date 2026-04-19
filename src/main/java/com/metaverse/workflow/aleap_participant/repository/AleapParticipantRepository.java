@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 public interface AleapParticipantRepository extends JpaRepository<AleapParticipant, Long> {
     Optional<AleapParticipant> findByContactNo(Long contactNo);
+
+    Optional<AleapParticipant> findByAadharNo(String aadharNo);
 }

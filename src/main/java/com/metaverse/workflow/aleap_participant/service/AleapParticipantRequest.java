@@ -2,6 +2,8 @@ package com.metaverse.workflow.aleap_participant.service;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class AleapParticipantRequest {
 
@@ -29,4 +31,5 @@ public class AleapParticipantRequest {
     private String pinCode;
 
     private String otherInformation;
+    private List<Long> eventIds;
 }
