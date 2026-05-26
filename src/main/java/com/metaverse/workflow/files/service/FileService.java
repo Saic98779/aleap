@@ -73,7 +73,15 @@ public class FileService {
             return BASE_URL + "/" + directory + "/" + filename;
 
         } catch (IOException e) {
-            throw new IllegalStateException("Failed to store file"+ e.getCause(),e);
+
+            e.printStackTrace();
+
+            throw new IllegalStateException(
+                    "Failed to store file: " + e.getClass().getName()
+                            + " - "
+                            + e.getMessage(),
+                    e
+            );
         }
     }
 
