@@ -1,45 +1,28 @@
-package com.metaverse.workflow.model;
+package com.metaverse.workflow.membership.service;
 
 import com.metaverse.workflow.common.enums.MembershipType;
 import com.metaverse.workflow.common.enums.PaymentType;
-import jakarta.persistence.*;
+import com.metaverse.workflow.model.Address;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
-@Entity
-@Table(name = "membership_application")
-@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class MembershipApplication {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Getter
+@Setter
+public class MembershipRequest {
 
     private String name;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "membership_type")
     private MembershipType membershipType;
-
     private LocalDate applicationDate;
 
     private String organizationName;
     private String representativeName;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "office_address_id")
     private Address officeAddress;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "residential_address_id")
     private Address residentialAddress;
 
     private String officePhone;
@@ -53,44 +36,25 @@ public class MembershipApplication {
     private PaymentType paymentType;
     private String bankName;
     private String ifscCode;
-    private String transactionId;
+    private String transactionId;//for upi
     private String checkNo;
     private LocalDate checkDate;
     private String purpose;
     private String billPath;
 
-    // Proposal Details
     private String proposedByName;
     private String signaturePath;
-
     private String secondedByName;
 
-    // Institution Details
-    @Column(columnDefinition = "TEXT")
     private String institutionsInvolved;
-
-    @Column(columnDefinition = "TEXT")
     private String institutionsNameAndAddress;
-
-    @Column(columnDefinition = "TEXT")
     private String objectivesActivities;
-
-    @Column(columnDefinition = "TEXT")
     private String natureOfInvolvement;
 
-    // Declaration
     private Boolean agreedToRules;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
-    private User createdBy;
+    private String userId;
 
     private String idProofPath;
     private String photoPath;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 }

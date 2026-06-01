@@ -27,7 +27,9 @@ public class EventDetails {
     private String eventTitle;
     @Column(length = 2000)
     private String description;
-    private String projectName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private ProjectDetails project;
     private String fundingAgency;
     private String ministry;
     @Enumerated(EnumType.STRING)
@@ -59,4 +61,8 @@ public class EventDetails {
             inverseJoinColumns = @JoinColumn(name = "participant_id")
     )
     private List<AleapParticipant> participants;
+    @OneToMany(mappedBy = "eventDetails", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EventProgramSession> eventSessionsList;
+    @OneToMany(mappedBy = "eventDetails", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AleapMediaCoverage> mediaCoverageList;
 }

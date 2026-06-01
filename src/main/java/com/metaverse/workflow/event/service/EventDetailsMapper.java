@@ -12,7 +12,8 @@ public class EventDetailsMapper {
                 .eventType(entity.getEventType())
                 .eventTitle(entity.getEventTitle())
                 .description(entity.getDescription())
-                .projectName(entity.getProjectName())
+                .projectId(entity.getProject().getId())
+                .projectName(entity.getProject().getTitleOfProject())
                 .fundingAgency(entity.getFundingAgency())
                 .ministry(entity.getMinistry())
                 .implementingAgency(entity.getImplementingAgency())
@@ -40,7 +41,6 @@ public class EventDetailsMapper {
                 .eventType(dto.getEventType())
                 .eventTitle(dto.getEventTitle())
                 .description(dto.getDescription())
-                .projectName(dto.getProjectName())
                 .fundingAgency(dto.getFundingAgency())
                 .ministry(dto.getMinistry())
                 .implementingAgency(dto.getImplementingAgency())
@@ -67,7 +67,6 @@ public class EventDetailsMapper {
         entity.setEventType(request.getEventType());
         entity.setEventTitle(request.getEventTitle());
         entity.setDescription(request.getDescription());
-        entity.setProjectName(request.getProjectName());
         entity.setFundingAgency(request.getFundingAgency());
         entity.setMinistry(request.getMinistry());
         entity.setImplementingAgency(request.getImplementingAgency());

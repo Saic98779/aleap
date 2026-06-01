@@ -18,7 +18,11 @@ public class EventDetailsController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody EventDetailsDTO request) {
-        return ResponseEntity.ok(service.create(request));
+        try {
+            return ResponseEntity.ok(service.create(request));
+        } catch (DataException e) {
+            return RestControllerBase.error(e);
+        }
     }
 
     @PutMapping("/{id}")
@@ -53,5 +57,10 @@ public class EventDetailsController {
         } catch (DataException e) {
             return RestControllerBase.error(e);
         }
+    }
+
+    @GetMapping("/project/{projectId}")
+    public ResponseEntity<?> getEventsByProject(@PathVariable Long projectId) {
+        return ResponseEntity.ok(service.getEventsByProject(projectId));
     }
 }
