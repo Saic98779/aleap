@@ -13,6 +13,7 @@ public class EventDetailsDTO {
     private EventType eventType;
     private String eventTitle;
     private String description;
+    private Long projectId;
     private String projectName;
     private String fundingAgency;
     private String ministry;
