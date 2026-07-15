@@ -1,47 +1,28 @@
-package com.metaverse.workflow.model;
+package com.metaverse.workflow.membership.service;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.metaverse.workflow.common.enums.MembershipType;
 import com.metaverse.workflow.common.enums.PaymentType;
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Entity
-@Table(name = "membership_application")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class MembershipApplication {
+public class MembershipApplicationResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "membership_type")
     private MembershipType membershipType;
-
     private LocalDate applicationDate;
 
     private String organizationName;
     private String representativeName;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "office_address_id")
-    private Address officeAddress;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "residential_address_id")
-    private Address residentialAddress;
+    private AddressResponse officeAddress;
+    private AddressResponse residentialAddress;
 
     private String officePhone;
     private String residencePhone;
@@ -60,39 +41,42 @@ public class MembershipApplication {
     private String purpose;
     private String billPath;
 
-    // Proposal Details
     private String proposedByName;
     private String signaturePath;
-
     private String secondedByName;
 
-    // Institution Details
-    @Column(columnDefinition = "TEXT")
     private String institutionsInvolved;
-
-    @Column(columnDefinition = "TEXT")
     private String institutionsNameAndAddress;
-
-    @Column(columnDefinition = "TEXT")
     private String objectivesActivities;
-
-    @Column(columnDefinition = "TEXT")
     private String natureOfInvolvement;
 
-    // Declaration
     private Boolean agreedToRules;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
-    @JsonIgnore
-    private User createdBy;
+    // Instead of returning the whole User object
+    private String createdBy;
 
     private String idProofPath;
     private String photoPath;
 
-    @CreationTimestamp
     private LocalDateTime createdAt;
-
-    @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+
+    @Data
+    @Builder
+    public static class AddressResponse {
+
+        private Long id;
+        private String houseNo;
+        private String streetName;
+        private String landmark;
+        private String location;
+        private String village;
+        private String villageOther;
+        private String mandal;
+        private String mandalOther;
+        private String district;
+        private String state;
+        private String pincode;
+    }
 }
