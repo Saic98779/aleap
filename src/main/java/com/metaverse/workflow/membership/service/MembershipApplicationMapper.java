@@ -1,5 +1,6 @@
 package com.metaverse.workflow.membership.service;
 
+import com.metaverse.workflow.model.Address;
 import com.metaverse.workflow.model.MembershipApplication;
 import com.metaverse.workflow.model.User;
 
@@ -81,5 +82,75 @@ public class MembershipApplicationMapper {
         entity.setCheckDate(request.getCheckDate());
         entity.setPurpose(request.getPurpose());
         entity.setBillPath(request.getBillPath());
+    }
+
+    public static MembershipApplicationResponse mapToResponse(MembershipApplication entity) {
+
+        if (entity == null) {
+            return null;
+        }
+
+        return MembershipApplicationResponse.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .membershipType(entity.getMembershipType())
+                .applicationDate(entity.getApplicationDate())
+                .organizationName(entity.getOrganizationName())
+                .representativeName(entity.getRepresentativeName())
+                .officeAddress(toAddressDto(entity.getOfficeAddress()))
+                .residentialAddress(toAddressDto(entity.getResidentialAddress()))
+                .officePhone(entity.getOfficePhone())
+                .residencePhone(entity.getResidencePhone())
+                .email(entity.getEmail())
+                .amount(entity.getAmount())
+                .billNo(entity.getBillNo())
+                .billDate(entity.getBillDate())
+                .payeeName(entity.getPayeeName())
+                .paymentType(entity.getPaymentType())
+                .bankName(entity.getBankName())
+                .ifscCode(entity.getIfscCode())
+                .transactionId(entity.getTransactionId())
+                .checkNo(entity.getCheckNo())
+                .checkDate(entity.getCheckDate())
+                .purpose(entity.getPurpose())
+                .billPath(entity.getBillPath())
+                .proposedByName(entity.getProposedByName())
+                .signaturePath(entity.getSignaturePath())
+                .secondedByName(entity.getSecondedByName())
+                .institutionsInvolved(entity.getInstitutionsInvolved())
+                .institutionsNameAndAddress(entity.getInstitutionsNameAndAddress())
+                .objectivesActivities(entity.getObjectivesActivities())
+                .natureOfInvolvement(entity.getNatureOfInvolvement())
+                .agreedToRules(entity.getAgreedToRules())
+                .createdBy(entity.getCreatedBy() != null
+                        ? entity.getCreatedBy().getUserId()
+                        : null)
+                .idProofPath(entity.getIdProofPath())
+                .photoPath(entity.getPhotoPath())
+                .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getUpdatedAt())
+                .build();
+    }
+
+    private static MembershipApplicationResponse.AddressResponse toAddressDto(Address address) {
+
+        if (address == null) {
+            return null;
+        }
+
+        return MembershipApplicationResponse.AddressResponse.builder()
+                .id(address.getId())
+                .houseNo(address.getHouseNo())
+                .streetName(address.getStreetName())
+                .landmark(address.getLandmark())
+                .location(address.getLocation())
+                .village(address.getVillage())
+                .villageOther(address.getVillageOther())
+                .mandal(address.getMandal())
+                .mandalOther(address.getMandalOther())
+                .district(address.getDistrict())
+                .state(address.getState())
+                .pincode(address.getPincode())
+                .build();
     }
 }
