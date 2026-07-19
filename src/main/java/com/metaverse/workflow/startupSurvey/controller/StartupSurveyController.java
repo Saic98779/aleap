@@ -1,6 +1,7 @@
 package com.metaverse.workflow.startupSurvey.controller;
 
 import com.metaverse.workflow.startupSurvey.dto.ApiResponse;
+import com.metaverse.workflow.startupSurvey.dto.PageResponse;
 import com.metaverse.workflow.startupSurvey.dto.StartupSurveyDTO;
 import com.metaverse.workflow.startupSurvey.Enums.FormStage;
 import com.metaverse.workflow.startupSurvey.service.StartupSurveyService;
@@ -55,14 +56,14 @@ public class StartupSurveyController {
      * GET /api/v1/startup-surveys?formStage=BASIC_INFORMATION&page=0&size=10
      */
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<StartupSurveyDTO>>> getAllSurveys(
+    public ResponseEntity<ApiResponse<PageResponse<StartupSurveyDTO>>> getAllSurveys(
             @RequestParam(required = false) FormStage formStage,
             Pageable pageable) {
         try {
             Page<StartupSurveyDTO> surveys = (formStage != null)
                     ? startupSurveyService.getSurveysByFormStage(formStage, pageable)
                     : startupSurveyService.getAllSurveys(pageable);
-            return ResponseEntity.ok(ApiResponse.success(surveys, "Surveys retrieved successfully"));
+            return ResponseEntity.ok(ApiResponse.success(PageResponse.from(surveys), "Surveys retrieved successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(ApiResponse.error("Failed to retrieve surveys: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
