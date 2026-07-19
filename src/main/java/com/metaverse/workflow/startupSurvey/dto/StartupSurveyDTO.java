@@ -107,6 +107,8 @@ public class StartupSurveyDTO {
 
     private Boolean infraRelatedIssues;
 
+    private FormStage formStage;
+
     private List<InfrastructureAssistance> infrastructureAssistance;
 
     // Audit Fields

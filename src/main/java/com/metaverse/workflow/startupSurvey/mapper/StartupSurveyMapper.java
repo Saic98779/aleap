@@ -121,7 +121,8 @@ public class StartupSurveyMapper {
                 .digitalMaturityTools(startupSurveyDTO.getDigitalMaturityTools())
                 .technicalInfrastructureSupports(startupSurveyDTO.getTechnicalInfrastructureSupports())
                 .infraRelatedIssues(startupSurveyDTO.getInfraRelatedIssues())
-                .infrastructureAssistance(startupSurveyDTO.getInfrastructureAssistance());
+                .infrastructureAssistance(startupSurveyDTO.getInfrastructureAssistance())
+                .formStage(startupSurveyDTO.getFormStage());
 
         StartupSurvey startupSurvey = builder.build();
 

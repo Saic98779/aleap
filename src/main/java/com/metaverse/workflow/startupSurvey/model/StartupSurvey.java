@@ -174,6 +174,9 @@ public class StartupSurvey extends BaseEntity {
     @Column(name = "support_type")
     private List<TechnicalInfrastructureSupport> technicalInfrastructureSupports;
 
+    @Enumerated(EnumType.STRING)
+    private FormStage formStage;
+
     private Boolean infraRelatedIssues;
 
     @ElementCollection(targetClass = InfrastructureAssistance.class)

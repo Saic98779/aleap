@@ -2,6 +2,7 @@ package com.metaverse.workflow.startupSurvey.controller;
 
 import com.metaverse.workflow.startupSurvey.dto.ApiResponse;
 import com.metaverse.workflow.startupSurvey.dto.StartupSurveyDTO;
+import com.metaverse.workflow.startupSurvey.Enums.FormStage;
 import com.metaverse.workflow.startupSurvey.service.StartupSurveyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -49,13 +50,18 @@ public class StartupSurveyController {
     }
 
     /**
-     * Get all surveys with pagination
+     * Get all surveys with pagination, optionally filtered by formStage
      * GET /api/v1/startup-surveys?page=0&size=10&sort=createdAt,desc
+     * GET /api/v1/startup-surveys?formStage=BASIC_INFORMATION&page=0&size=10
      */
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<StartupSurveyDTO>>> getAllSurveys(Pageable pageable) {
+    public ResponseEntity<ApiResponse<Page<StartupSurveyDTO>>> getAllSurveys(
+            @RequestParam(required = false) FormStage formStage,
+            Pageable pageable) {
         try {
-            Page<StartupSurveyDTO> surveys = startupSurveyService.getAllSurveys(pageable);
+            Page<StartupSurveyDTO> surveys = (formStage != null)
+                    ? startupSurveyService.getSurveysByFormStage(formStage, pageable)
+                    : startupSurveyService.getAllSurveys(pageable);
             return ResponseEntity.ok(ApiResponse.success(surveys, "Surveys retrieved successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

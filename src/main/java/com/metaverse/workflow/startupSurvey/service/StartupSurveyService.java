@@ -1,6 +1,7 @@
 package com.metaverse.workflow.startupSurvey.service;
 
 import com.metaverse.workflow.startupSurvey.dto.StartupSurveyDTO;
+import com.metaverse.workflow.startupSurvey.Enums.FormStage;
 import com.metaverse.workflow.startupSurvey.mapper.StartupSurveyMapper;
 import com.metaverse.workflow.startupSurvey.model.StartupSurvey;
 import com.metaverse.workflow.startupSurvey.repository.StartupSurveyRepository;
@@ -58,6 +59,14 @@ public class StartupSurveyService {
      */
     public Page<StartupSurveyDTO> getAllSurveys(Pageable pageable) {
         return startupSurveyRepository.findAll(pageable)
+                .map(startupSurveyMapper::toDTO);
+    }
+
+    /**
+     * Get all surveys filtered by formStage with pagination
+     */
+    public Page<StartupSurveyDTO> getSurveysByFormStage(FormStage formStage, Pageable pageable) {
+        return startupSurveyRepository.findByFormStage(formStage, pageable)
                 .map(startupSurveyMapper::toDTO);
     }
 
@@ -132,5 +141,6 @@ public class StartupSurveyService {
         if (dto.getInfraRelatedIssues() != null) existingSurvey.setInfraRelatedIssues(dto.getInfraRelatedIssues());
         if (dto.getInfrastructureAssistance() != null) existingSurvey.setInfrastructureAssistance(dto.getInfrastructureAssistance());
         if (dto.getSupportNeeded() != null) existingSurvey.setSupportNeeded(dto.getSupportNeeded());
+        if (dto.getFormStage() != null) existingSurvey.setFormStage(dto.getFormStage());
     }
 }
