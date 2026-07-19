@@ -66,6 +66,7 @@ public class StartupSurveyMapper {
                 .technicalInfrastructureSupports(startupSurvey.getTechnicalInfrastructureSupports())
                 .infraRelatedIssues(startupSurvey.getInfraRelatedIssues())
                 .infrastructureAssistance(startupSurvey.getInfrastructureAssistance())
+                .formStage(startupSurvey.getFormStage())
                 .createdAt(startupSurvey.getCreatedAt())
                 .updatedAt(startupSurvey.getUpdatedAt())
                 .createdBy(startupSurvey.getCreatedBy())
