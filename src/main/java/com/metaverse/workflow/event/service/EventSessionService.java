@@ -1,5 +1,6 @@
 package com.metaverse.workflow.event.service;
 
+import com.metaverse.workflow.common.fileservice.StorageService;
 import com.metaverse.workflow.common.response.WorkflowResponse;
 import com.metaverse.workflow.event.repository.EventDetailsRepository;
 import com.metaverse.workflow.event.repository.EventSessionRepository;
@@ -10,7 +11,10 @@ import com.metaverse.workflow.model.Resource;
 import com.metaverse.workflow.resouce.repository.ResourceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -20,6 +24,7 @@ public class EventSessionService {
     private final EventSessionRepository sessionRepository;
     private final EventDetailsRepository eventDetailsRepository;
     private final ResourceRepository resourceRepository;
+    private final StorageService storageService;
 
     public WorkflowResponse saveSession(EventSessionRequest request) throws DataException {
 
@@ -60,6 +65,65 @@ public class EventSessionService {
         return WorkflowResponse.builder()
                 .status(200)
                 .message("Session saved successfully")
+                .build();
+    }
+
+    public WorkflowResponse saveSessionImages(EventExecutionSessionRequest request, MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4, MultipartFile image5) throws DataException, ParseException {
+
+        Long sessionId = request.getProgramSessionId() != null ? request.getProgramSessionId() : request.getSessionId();
+        if (sessionId == null) {
+            throw new DataException("Session id is required", "SESSION_ID_REQUIRED", 400);
+        }
+
+        EventProgramSession session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new DataException(
+                        "Session not found",
+                        "SESSION_NOT_FOUND",
+                        404));
+
+        session.setSessionStreamingUrl(request.getSessionStreamingUrl());
+        session.setSessionDetails(request.getSessionDetails());
+        if (request.getSessionDate() != null && !request.getSessionDate().isBlank()) {
+            session.setSessionDate(new SimpleDateFormat("dd-MM-yyyy").parse(request.getSessionDate()));
+        }
+        session.setStartTime(request.getStartTime());
+        session.setEndTime(request.getEndTime());
+
+        if (request.getResourceId() != null) {
+            Resource resource = resourceRepository.findById(request.getResourceId())
+                    .orElseThrow(() -> new DataException(
+                            "Resource not found",
+                            "RESOURCE_NOT_FOUND",
+                            404));
+            session.setResource(resource);
+        }
+
+        Long eventId = session.getEventDetails() != null
+                ? session.getEventDetails().getEventId()
+                : request.getEventId();
+
+        if (image1 != null) {
+            session.setImage1(storageService.store(image1, eventId, "photos"));
+        }
+        if (image2 != null) {
+            session.setImage2(storageService.store(image2, eventId, "photos"));
+        }
+        if (image3 != null) {
+            session.setImage3(storageService.store(image3, eventId, "photos"));
+        }
+        if (image4 != null) {
+            session.setImage4(storageService.store(image4, eventId, "photos"));
+        }
+        if (image5 != null) {
+            session.setImage5(storageService.store(image5, eventId, "photos"));
+        }
+
+        EventProgramSession response = sessionRepository.save(session);
+
+        return WorkflowResponse.builder()
+                .status(200)
+                .message("Success")
+                .data(EventSessionService.toResponse(response))
                 .build();
     }
 
