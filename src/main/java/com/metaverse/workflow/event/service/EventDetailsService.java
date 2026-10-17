@@ -3,6 +3,7 @@ package com.metaverse.workflow.event.service;
 
 
 
+import com.metaverse.workflow.common.fileservice.StorageService;
 import com.metaverse.workflow.common.response.WorkflowResponse;
 import com.metaverse.workflow.common.util.DateUtil;
 import com.metaverse.workflow.event.repository.AleapMediaCoverageRepository;
@@ -14,6 +15,7 @@ import com.metaverse.workflow.model.ProjectDetails;
 import com.metaverse.workflow.project.repository.ProjectDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +29,7 @@ public class EventDetailsService {
     private final EventDetailsRepository repository;
     private final ProjectDetailsRepository projectRepository;
     private final AleapMediaCoverageRepository aleapMediaCoverageRepository;
+    private final StorageService storageService;
 
     public WorkflowResponse create(EventDetailsDTO request) throws DataException {
        ProjectDetails  projectDetails  = projectRepository.findById(request.getProjectId())
@@ -128,6 +131,10 @@ public class EventDetailsService {
 
 
     public WorkflowResponse saveMediaCoverage(AleapMediaCoverageRequest request) throws DataException {
+        return saveMediaCoverage(request, null, null, null);
+    }
+
+    public WorkflowResponse saveMediaCoverage(AleapMediaCoverageRequest request, MultipartFile image1, MultipartFile image2, MultipartFile image3) throws DataException {
 
         AleapMediaCoverage coverage;
 
@@ -144,9 +151,25 @@ public class EventDetailsService {
             mediaCoverage.setMediaCoverageUrl(request.getMediaCoverageUrl());
             mediaCoverage.setDate(DateUtil.stringToDate(request.getDate(), "dd-MM-yyyy"));
 
-            mediaCoverage.setImage1(request.getImage1());
-            mediaCoverage.setImage2(request.getImage2());
-            mediaCoverage.setImage3(request.getImage3());
+            Long eventId = mediaCoverage.getEventDetails() != null
+                    ? mediaCoverage.getEventDetails().getEventId()
+                    : request.getEventId();
+
+            if (image1 != null) {
+                mediaCoverage.setImage1(storageService.store(image1, eventId, "media"));
+            } else if (request.getImage1() != null) {
+                mediaCoverage.setImage1(request.getImage1());
+            }
+            if (image2 != null) {
+                mediaCoverage.setImage2(storageService.store(image2, eventId, "media"));
+            } else if (request.getImage2() != null) {
+                mediaCoverage.setImage2(request.getImage2());
+            }
+            if (image3 != null) {
+                mediaCoverage.setImage3(storageService.store(image3, eventId, "media"));
+            } else if (request.getImage3() != null) {
+                mediaCoverage.setImage3(request.getImage3());
+            }
 
             coverage = aleapMediaCoverageRepository.save(mediaCoverage);
 
@@ -158,13 +181,23 @@ public class EventDetailsService {
                             "EVENT_NOT_FOUND",
                             404));
 
+            String image1Path = image1 != null
+                    ? storageService.store(image1, eventDetails.getEventId(), "media")
+                    : request.getImage1();
+            String image2Path = image2 != null
+                    ? storageService.store(image2, eventDetails.getEventId(), "media")
+                    : request.getImage2();
+            String image3Path = image3 != null
+                    ? storageService.store(image3, eventDetails.getEventId(), "media")
+                    : request.getImage3();
+
             AleapMediaCoverage mediaCoverage = AleapMediaCoverage.builder()
                     .mediaCoverageType(request.getMediaCoverageType())
                     .mediaCoverageUrl(request.getMediaCoverageUrl())
                     .date(DateUtil.stringToDate(request.getDate(), "dd-MM-yyyy"))
-                    .image1(request.getImage1())
-                    .image2(request.getImage2())
-                    .image3(request.getImage3())
+                    .image1(image1Path)
+                    .image2(image2Path)
+                    .image3(image3Path)
                     .eventDetails(eventDetails)
                     .build();
 
